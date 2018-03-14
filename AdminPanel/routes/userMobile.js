@@ -21,7 +21,6 @@ router.get('/list', utils.isLoggedIn, function(req, res) {
     });
 });
 
-
 router.post('/add',function(req, res) {
     // save user in database
     console.log(req.body);
@@ -46,6 +45,25 @@ router.post('/add',function(req, res) {
         		});
 			}
 		});
+});
+
+router.delete('/delete/:username',function(req,res) {
+    console.log("username = ",req.params.username);
+    console.log("req body = ", req.body);
+    utils.deleteMobileUser(req.params['username']).then(function(response,err) {
+        console.log("error = ", err);
+        console.log("response = ", response);
+        if(response.status == "success") {
+            res.json({
+                status : 'success',
+            });
+        }
+        else if(response.status == "noUserFound") {
+            res.json({
+                status : 'noUserFound'
+            });
+        }
+    });
 });
 
 

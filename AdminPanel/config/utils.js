@@ -83,7 +83,33 @@ var listAllMobileUsers = function (){
 	return deferred.promise;
 }
 
+var deleteMobileUser = function(username){
+	var deferred = Q.defer();
+	MobileUser.remove({'username' : username}, function(err, user) {
+		if(err){
+			console.log("error = ", err);
+			deferred.reject(new Error(err));
+		}
+		// console.log("user =",user);
+		if(user && user.result.n >= 1) {
+			console.log("Deleted User = ",user.result);
+			deferred.resolve({
+				'status': 'success',
+			});
+		}
+		else if(user && user.result.n == 0)
+		{
+			console.log("user not found");
+			deferred.resolve({
+				status : 'noUserFound',
+			});
+		}
+	});
+	return deferred.promise;
+}
 
 module.exports = {isLoggedIn:isLoggedIn,
 			      addNewMobileUser:addNewMobileUser,
-			  	  listAllMobileUsers:listAllMobileUsers};
+			  	  listAllMobileUsers:listAllMobileUsers,
+			  	  deleteMobileUser:deleteMobileUser
+			  	};
