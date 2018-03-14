@@ -1,2 +1,2 @@
-# L&amp;T_SnagManagementSystem
+# L&T_SnagManagementSystem
 
