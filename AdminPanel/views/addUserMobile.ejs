@@ -1,0 +1,93 @@
+<% layout('layout') -%>
+
+<% if(user) { %>
+<div class="container">
+    <div class="card card-register mx-auto mt-6">
+      <div class="card-header">Add a new Mobile User Account</div>
+      <div class="card-body">
+        <form name="addUserMobileForm" action="/userMobile/add" method="post" id="addUserMobileForm" onSubmit="return true;">
+        
+        <div class="form-group">
+            <div class="form-row">
+              <% if(status && status == "userAlreadyExist") { %>
+              <label style="color:red">This username already exist. Try different username.</label>
+             <% } %>
+             <% if(status && status == "success") { %>
+              <label style="color:green">User Successfully Added!</label>
+             <% } %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <label for="exampleInputName">First name</label>
+                <input class="form-control" id="firstname" name="firstname" type="text" aria-describedby="nameHelp" placeholder="Enter first name" required>
+              </div>
+              <div class="col-md-6">
+                <label for="exampleInputLastName">Last name</label>
+                <input class="form-control" id="lastname" name="lastname" type="text" aria-describedby="nameHelp" placeholder="Enter last name" required>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <label for="exampleInputUserType">User Type</label>
+              <select name="usertype" id="usertype" class="form-control">
+                <option value="inspector 1">Inspector 1</option>
+                <option value="function operator">Function Operator</option>
+                <option value="inspector 2">Inspector 2</option>
+                <option value="inspector 3">Inspector 3</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputUsername">Username</label>
+            <input class="form-control" id="username" name="username" type="text" aria-describedby="UsernameHelp" readonly="readonly" required>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+                <label for="exampleInputPassword1">Password</label>
+                <input class="form-control" id="password" name="password" type="text" readonly="readonly" required>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-block" type="Submit">Register</button>
+        </form>
+      </div>
+    </div>
+</div>
+<% } %>
+
+<script>
+function createUsername()  {
+  var firstname = $('#addUserMobileForm input[name=firstname]').val().substring(0,1).toLowerCase();
+  var lastname = $('#addUserMobileForm input[name=lastname]').val().substring(0,1).toLowerCase();
+  var chars = "0123456789";
+  var string_length = 4;
+  var randomstring = '';
+  for (var i=0; i<string_length; i++) {
+    var rnum = Math.floor(Math.random() * chars.length);
+    randomstring += chars.substring(rnum,rnum+1);
+  }
+  var username = firstname + lastname + randomstring;
+  $('#addUserMobileForm input[name=username]').val(username);
+
+  generatePassword();
+}
+
+$('#addUserMobileForm input[name=firstname]').on('keyup', createUsername);
+$('#addUserMobileForm input[name=lastname]').on('keyup', createUsername);
+
+
+function generatePassword() {
+    var chars = "0123456789abcdefghiklmnopqrstuvwxyz";
+    var string_length = 6;
+    var randomstring = '';
+    for (var i=0; i<string_length; i++) {
+      var rnum = Math.floor(Math.random() * chars.length);
+      randomstring += chars.substring(rnum,rnum+1);
+    }
+    document.addUserMobileForm.password.value = randomstring; 
+}
+</script>
