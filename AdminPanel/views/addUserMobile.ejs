@@ -7,14 +7,14 @@
       <div class="card-body">
         <form name="addUserMobileForm" action="/userMobile/add" method="post" id="addUserMobileForm" onSubmit="return true;">
         
-        <div class="form-group">
+          <div class="form-group">
             <div class="form-row">
               <% if(status && status == "userAlreadyExist") { %>
-              <label style="color:red">This username already exist. Try different username.</label>
-             <% } %>
-             <% if(status && status == "success") { %>
-              <label style="color:green">User Successfully Added!</label>
-             <% } %>
+               <label style="color:red">This username already exist. Try different username.</label>
+              <% } %>
+              <% if(status && status == "success") { %>
+               <label style="color:green">User Successfully Added!</label>
+              <% } %>
             </div>
           </div>
 

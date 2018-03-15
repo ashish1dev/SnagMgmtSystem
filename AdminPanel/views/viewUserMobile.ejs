@@ -32,7 +32,9 @@
     	              			<% response.users.forEach( function( user ){ %>
     	              			<tr>
                                     <td>
-                                        <input type="button" data-id="<%=user.username %>" data-toggle="modal" data-target="#deleteModal"  class="open-DeleteDialog btn btn-warning" value="delete"/> 
+                                        <input type="button" data-id="<%=user.username %>" data-toggle="modal" data-target="#deleteModal"  class="open-DeleteDialog btn btn-warning" value="Delete"/>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <input type="button" class="updateButton btn btn-secondary" data-id="<%=user.username %>" value="Update"> 
                                     </td>
                                     <td>
                                         <%=user.firstname %>
@@ -93,6 +95,10 @@ $(document).ready(function () {
     $(".open-DeleteDialog").click(function () {
           $('.modal-body #usernameLabel').val($(this).data('id'));
     });
+    $(".updateButton").click(function() {
+        var username = $(this).data('id');
+        window.location.replace("/userMobile/update/" +username);
+    });
 });
 
 
@@ -114,7 +120,13 @@ function deleteRecord(){
             }
 
         }
-    });
-        
+    });       
+}
+
+
+function redirect() {
+    $
+
+    window.location.replace("/userMobile/update/");
 }
 </script>

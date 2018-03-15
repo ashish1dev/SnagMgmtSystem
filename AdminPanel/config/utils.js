@@ -77,9 +77,7 @@ var listAllMobileUsers = function (){
 				status : 'userNotFound',
 			});
 		}
-	}).sort({
-        "created": -1
-    });;
+	});
 	return deferred.promise;
 }
 
@@ -90,7 +88,6 @@ var deleteMobileUser = function(username){
 			console.log("error = ", err);
 			deferred.reject(new Error(err));
 		}
-		// console.log("user =",user);
 		if(user && user.result.n >= 1) {
 			console.log("Deleted User = ",user.result);
 			deferred.resolve({
@@ -108,8 +105,58 @@ var deleteMobileUser = function(username){
 	return deferred.promise;
 }
 
+var updateMobileUser = function(firstname, lastname, username, usertype, password) {
+	var deferred = Q.defer();
+	MobileUser.findOneAndUpdate({'username': username}, 
+								{"$set" : {'firstname' : firstname, 'lastname' : lastname, 'usertype' : usertype, 'password' : password}},
+								{new : true}, function(err, user){
+		if (err) {
+	      deferred.reject(new Error(err));
+	    }
+	    if(user){
+	    	deferred.resolve({
+	    		'user' : user,
+	    		'status' : 'success',
+	    		'updated' : true
+	    	});
+	    }
+	    else{
+	    	deferred.resolve({
+	    		'user' : null,
+	    		'status' : 'noUserFound',
+	    		'updated' : false
+	    	});
+	    }
+	 });
+	return deferred.promise;
+}
+
+var getMobileUser = function(username) {
+	var deferred = Q.defer();
+	MobileUser.findOne({'username' : username}, function(err,user){
+		if (err) {
+	      deferred.reject(new Error(err));
+	    }
+	    if(user && user != "undefined"){
+	    	deferred.resolve({
+	    		'user' : user,
+	    		'status' : 'success'
+	    	});
+	    }
+	    else{
+	    	deferred.resolve({
+	    		'user' : null,
+	    		'status' : 'noUserFound'
+	    	});
+	    }
+	 });
+	return deferred.promise;
+}
+
 module.exports = {isLoggedIn:isLoggedIn,
 			      addNewMobileUser:addNewMobileUser,
 			  	  listAllMobileUsers:listAllMobileUsers,
-			  	  deleteMobileUser:deleteMobileUser
+			  	  deleteMobileUser:deleteMobileUser,
+			  	  updateMobileUser:updateMobileUser,
+			  	  getMobileUser:getMobileUser
 			  	};

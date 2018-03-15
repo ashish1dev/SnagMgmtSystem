@@ -1,0 +1,73 @@
+<% layout('layout') -%>
+
+
+<% if(user) { %>
+<% if (response && response.user) { %>
+<div class="container">
+    <div class="card card-register mx-auto mt-6">
+      <div class="card-header">Update the Mobile User Account</div>
+      <div class="card-body">
+        
+        <form name="updateUserMobileForm" action="/userMobile/update/<%= response.user.username %>" method="post" id="updateUserMobileForm" onSubmit="return true;">
+
+          <div class="form-group">
+            <div class="form-row">
+              <% if(response.updated && response.updated == false) { %>
+               <label style="color:red">Fields could not be updated.</label>
+              <% } %>
+              <% if(response.updated && response.updated == true) { %>
+               <label style="color:green">Fields Successfully Updated!</label>
+              <% } %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <label for="exampleInputName">First name</label>
+                <input class="form-control" id="firstname" name="firstname" type="text" aria-describedby="nameHelp" placeholder="Enter first name" value="<%=response.user.firstname %>" required maxlength="20">
+              </div>
+              <div class="col-md-6">
+                <label for="exampleInputLastName">Last name</label>
+                <input class="form-control" id="lastname" name="lastname" type="text" aria-describedby="nameHelp" placeholder="Enter last name" value="<%= response.user.lastname %>" required maxlength="20">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <label for="exampleInputUserType">User Type</label>
+              <select name="usertype" id="usertype" value="<%=response.user.usertype %>" class="form-control">
+                <option class="inspector 1" value="inspector 1">Inspector 1</option>
+                <option class="function operator" value="function operator">Function Operator</option>
+                <option class="inspector 2" value="inspector 2">Inspector 2</option>
+                <option class="inspector 3" value="inspector 3">Inspector 3</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputUsername">Username</label>
+            <input class="form-control" id="username" name="username" type="text" aria-describedby="UsernameHelp" readonly="readonly" value="<%= response.user.username %>" disabled>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+                <label for="exampleInputPassword1">Password</label>
+                <input class="form-control" id="password" name="password" type="text" value="<%= response.user.password %>" required maxlength="6">
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-block" type="Submit">Update</button>
+        </form>
+      </div>
+      
+    </div>
+</div>
+
+<script>
+	document.getElementsByClassName("<%=response.user.usertype %>")[0].selected = true; 
+</script>
+
+<% } else{%>
+<h2>No Record Found.</h2>
+<% } %>
+<% } %>
+
