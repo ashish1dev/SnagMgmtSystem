@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var utils = require('../config/utils');
+var utilsMobileUser = require('../config/utils_mobileUser');
 var moment = require('moment');
 
 /* GET users listing. */
@@ -10,7 +11,7 @@ router.get('/add', utils.isLoggedIn,function(req, res) {
 
 
 router.get('/list', utils.isLoggedIn, function(req, res) {
-    utils.listAllMobileUsers().then(function(response) {
+    utilsMobileUser.listAllMobileUsers().then(function(response) {
 
         res.render('viewUserMobile', {
             user: req.user,
@@ -22,10 +23,10 @@ router.get('/list', utils.isLoggedIn, function(req, res) {
 });
 
 
-router.post('/add',function(req, res) {
+router.post('/add', utils.isLoggedIn, function(req, res) {
     // save user in database
     console.log(req.body);
-    utils.addNewMobileUser(req.body['firstname'],
+    utilsMobileUser.addNewMobileUser(req.body['firstname'],
         req.body['lastname'],
         req.body['username'],
         req.body['usertype'],
@@ -53,10 +54,10 @@ router.post('/add',function(req, res) {
 });
 
 
-router.delete('/delete/:username',function(req,res) {
+router.delete('/delete/:username', utils.isLoggedIn, function(req,res) {
     console.log("username = ",req.params.username);
     console.log("req body = ", req.body);
-    utils.deleteMobileUser(req.params['username']).then(function(response,err) {
+    utilsMobileUser.deleteMobileUser(req.params['username']).then(function(response,err) {
         try {
             console.log("error = ", err);
             console.log("response = ", response);
@@ -77,8 +78,8 @@ router.delete('/delete/:username',function(req,res) {
 });
 
 
-router.get('/update/:username', function(req, res) {
-    utils.getMobileUser(req.params['username']).then(function(response,err) {
+router.get('/update/:username', utils.isLoggedIn, function(req, res) {
+    utilsMobileUser.getMobileUser(req.params['username']).then(function(response,err) {
         try{
             if(response.status == "success") {
                 res.render('updateUserMobile', {
@@ -101,11 +102,11 @@ router.get('/update/:username', function(req, res) {
 });
 
 
-router.post('/update/:username',function(req,res) {
+router.post('/update/:username', utils.isLoggedIn, function(req,res) {
     console.log("inside update post route");
     console.log("username = ",req.params.username);
     console.log("req body = ", req.body);
-    utils.updateMobileUser(req.body['firstname'],
+    utilsMobileUser.updateMobileUser(req.body['firstname'],
                            req.body['lastname'],
                            req.params['username'],
                            req.body['usertype'],
