@@ -1,5 +1,7 @@
 <% layout('layout') -%>
 
+
+<% if(user) { %>
 <div class="content-wrapper">
     <div class="container-fluid">
       <!-- Breadcrumbs-->
@@ -7,11 +9,11 @@
         <li class="breadcrumb-item">
           <a href="/">Home</a>
         </li>
-        <li class="breadcrumb-item active">Mobile User Table</li>
+        <li class="breadcrumb-item active"><a href="/machine/list"> Machine Table</a></li>
       </ol>
 	<div class="card mb-3">
 	    <div class="card-header">
-	    	<i class="fa fa-table"></i>Mobile User Table</div>
+	    	<i class="fa fa-table"></i>Machine Table</div>
 	        <div class="card-body">
 	        	<div class="table-responsive">
                     <form>
@@ -20,39 +22,30 @@
     	              		<thead>
     	                		<tr>
                                     <th></th>
-    	                  			<th>First Name</th>
-    	                  			<th>Last Name</th>
-    	                  			<th>Username</th>
-    	                  			<th>User Type</th>
-    	                  			<th>Password</th>
+    	                  			<th>Machine Id</th>
+    	                  			<th>QR code</th>
+    	                  			<th>Model Name</th>
     	                  			<th>Created On</th>
     	                		</tr>
     	              		</thead>
     	              		<tbody>
-    	              			<% response.users.forEach( function( user ){ %>
+    	              			<% response.users.forEach( function( machine ){ %>
     	              			<tr>
                                     <td>
-                                        <input type="button" data-id="<%=user.username %>" data-toggle="modal" data-target="#deleteModal"  class="open-DeleteDialog btn btn-warning" value="Delete"/>
+                                        <input type="button" data-id="<%=machine.id %>" data-toggle="modal" data-target="#deleteModal"  class="open-DeleteDialog btn btn-warning" value="Delete"/>
                                         &nbsp;&nbsp;&nbsp;
-                                        <input type="button" class="updateButton btn btn-secondary" data-id="<%=user.username %>" value="Update"> 
+                                        <input type="button" class="updateButton btn btn-secondary" data-id="<%=machine.id %>" value="Update"> 
                                     </td>
                                     <td>
-                                        <%=user.firstname %>
+                                        
                                     </td>
                                     <td>
-                                        <%= user.lastname %>
+                                       
+                                    <td>
+                                        <%=machine.modelname %>
                                     </td>
                                     <td>
-                                        <%=user.username %>
-                                    </td>
-                                    <td>
-                                        <%= user.usertype %>
-                                    </td>
-                                    <td>
-                                        <%= user.password %>
-                                    </td>
-                                    <td>
-                                        <%= new moment(user.created).format('Do MMMM, YYYY HH:mm:ss') %>
+                                        <%= new moment(machine.created).format('Do MMMM, YYYY HH:mm:ss') %>
                                     </td>
                                 </tr>
                                 
@@ -75,7 +68,7 @@
                         </button>
                       </div>
                       <div class="modal-body">Are you sure you want to delete this record ?  
-                      <input type="hidden" name="usernameLabel" id="usernameLabel" />     </div>
+                      <input type="hidden" name="machineLabel" id="machineLabel" />     </div>
                       
                       <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
@@ -93,30 +86,30 @@
 
 $(document).ready(function () {
     $(".open-DeleteDialog").click(function () {
-          $('.modal-body #usernameLabel').val($(this).data('id'));
+          $('.modal-body #machineLabel').val($(this).data('id'));
     });
     $(".updateButton").click(function() {
-        var username = $(this).data('id');
-        window.location.replace("/userMobile/update/" +username);
+        var machine = $(this).data('id');
+        window.location.replace("/machine/update/" +machine);
     });
 });
 
 
 function deleteRecord(){
 
-    console.log('....'+  $('#usernameLabel').val());
-    var username = $('#usernameLabel').val();
+    console.log('....'+  $('#machineLabel').val());
+    var machine = $('#machineLabel').val();
 
     $.ajax({
-        url: 'http://localhost:3001/userMobile/delete/' + username,
+        url: 'http://localhost:3001/machine/delete/' + machine,
         type: 'DELETE',
         success: function(data) {
             console.log(data);
             if(data.status == "success"){
                 location.reload();
             }
-            else if(data.status == "noUserFound") {
-                alert("Could not Find the User");
+            else if(data.status == "noMachineFound") {
+                alert("Could not Find the Machine");
             }
 
         }
@@ -124,3 +117,4 @@ function deleteRecord(){
 }
 
 </script>
+<% } %>

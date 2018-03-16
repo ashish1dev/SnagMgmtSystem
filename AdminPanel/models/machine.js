@@ -3,16 +3,13 @@ var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
 
 // define the schema for our user model
-var mobileUserSchema = mongoose.Schema({
-      firstname : String,
-      lastname  : String,
-      username    : String,
-      usertype : String,
-      password    : String,
-      profilepicture : { 
+var machineSchema = mongoose.Schema({
+      machineid : String,
+      qrcode : { 
         data: Buffer, 
         contentType: String 
       },
+      modelname : String,
       created: {
         type: Date,
         default: Date.now
@@ -22,4 +19,4 @@ var mobileUserSchema = mongoose.Schema({
 
 
 // create the model for users and expose it to our app
-module.exports = mongoose.model('MobileUserCollection', mobileUserSchema);
+module.exports = mongoose.model('MachineCollection', machineSchema);

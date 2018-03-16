@@ -13,6 +13,9 @@
   var signup = require('./routes/signup');
   var logout = require('./routes/logout');
   var userMobile = require('./routes/userMobile');
+  var machineCategory = require('./routes/machineCategory');
+  var machineSubCategory = require('./routes/machineSubCategory');
+  var machine = require('./routes/machine');
 
   var config = require('./config');
   var dbConfig = require('./models/db.js');
@@ -55,6 +58,9 @@
   app.use('/signup', signup);
   app.use('/logout', logout);
   app.use('/userMobile', userMobile);
+  app.use('/machine', machine);
+  app.use('/machineCategory', machineCategory);
+  app.use('/machineSubCategory', machineSubCategory);
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {

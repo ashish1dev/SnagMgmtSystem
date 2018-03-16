@@ -1,0 +1,52 @@
+<% layout('layout') -%>
+
+
+<% if(user) { %>
+<% if (response && response.user) { %>
+<div class="container">
+    <div class="card card-register mx-auto mt-6">
+      <div class="card-header">Update the Machine</div>
+      <div class="card-body">
+        
+        <form name="updateMachineForm" action="/machine/update/<%= response.user.id %>" method="post" id="updateMahcineForm" onSubmit="return true;">
+
+          <div class="form-group">
+            <div class="form-row">
+              <% if(response.updated && response.updated == false) { %>
+               <label style="color:red">Fields could not be updated.</label>
+              <% } %>
+              <% if(response.updated && response.updated == true) { %>
+               <label style="color:green">Fields Successfully Updated!</label>
+              <% } %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-row">
+                <label for="exampleInputMachineId">Machine Id</label>
+                <input class="form-control" id="machineid" name="machineid" type="text" aria-describedby="machineidHelp" placeholder="Enter Machine Id" value="<%=response.user.machineid %>" disabled>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <label for="exampleQRCode">QR Code</label>
+                <input class="form-control" id="qrcode" name="qrcode" type="text" aria-describedby="nameHelp" value="<%=response.user.qrcode %>" disabled>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputModelName">Model name</label>
+            <input class="form-control" id="modelname" name="modelname" type="text" aria-describedby="ModelNameHelp" value="<%= response.user.modelname %>" maxlength="30" required>
+          </div>
+          <button class="btn btn-primary btn-block" type="Submit">Update</button>
+        </form>
+      </div>
+      
+    </div>
+</div>
+
+
+<% } else{%>
+<h2>No Record Found.</h2>
+<% } %>
+<% } %>
+

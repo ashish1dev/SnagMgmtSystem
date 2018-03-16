@@ -1,0 +1,31 @@
+<% layout('layout') -%>
+
+<% if(user) { %>
+<div class="container">
+    <div class="card card-register mx-auto mt-6">
+      <div class="card-header">Add a new Machine</div>
+      <div class="card-body">
+        <form name="addMachineForm" action="/machine/add" method="post" id="addMachineForm" onSubmit="return true;">
+        
+          <div class="form-group">
+            <div class="form-row">
+              <% if(status && status == "machineAlreadyExist") { %>
+               <label style="color:red">This machine already exist. Try different machine.</label>
+              <% } %>
+              <% if(status && status == "success") { %>
+               <label style="color:green">Machine Successfully Added!</label>
+              <% } %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputModelName">Model Name</label>
+            <input class="form-control" id="modelname" name="modelname" type="text" aria-describedby="ModelNameHelp" maxlength="30" required>
+          </div>
+          <button class="btn btn-primary btn-block" type="Submit">Submit</button>
+        </form>
+      </div>
+    </div>
+</div>
+<% } %>
+

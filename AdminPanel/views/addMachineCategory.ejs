@@ -1,0 +1,34 @@
+<% layout('layout') -%>
+
+<% if(user) { %>
+<div class="container">
+    <div class="card card-register mx-auto mt-6">
+      <div class="card-header">Add a new Machine Category</div>
+        <div class="card-body">
+          <form name="addMachineCategoryForm" action="/machineCategory/add" method="post" id="addMachineCategoryForm" onSubmit="return true;">
+          
+            <div class="form-group">
+              <div class="form-row">
+                <% if(status && status == "machineCategoryAlreadyExist") { %>
+                 <label style="color:red">This Machine Category already exist. Use different Machine Category name.</label>
+                <% } %>
+                <% if(status && status == "success") { %>
+                 <label style="color:green">Machine Category Successfully Added!</label>
+                <% } %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="form-row">
+                  <label for="exampleInputName">Machine Category</label>
+                  <input class="form-control" id="machinecategory" name="machinecategory" type="text" aria-describedby="nameHelp" placeholder="Enter Machine Category" maxlength="30" required>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary btn-block" type="Submit">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+<% } %>
