@@ -16,6 +16,8 @@
   var machineCategory = require('./routes/machineCategory');
   var machineSubCategory = require('./routes/machineSubCategory');
   var machine = require('./routes/machine');
+  var parts = require('./routes/parts');
+  var snag = require('./routes/snag');
 
   var config = require('./config');
   var dbConfig = require('./models/db.js');
@@ -61,6 +63,8 @@
   app.use('/machine', machine);
   app.use('/machineCategory', machineCategory);
   app.use('/machineSubCategory', machineSubCategory);
+  app.use('/parts', parts);
+  app.use('/snag', snag);
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {

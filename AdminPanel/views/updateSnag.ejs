@@ -1,0 +1,75 @@
+<% layout('layout') -%>
+
+
+<% if(user) { %>
+<% if (response && response.snag) { %>
+<div class="container">
+    <div class="card card-register mx-auto mt-6">
+      <div class="card-header">Update the Snag</div>
+      <div class="card-body">
+        
+        <form name="updateSnagForm" action="/snag/update/<%= response.snag.id %>" method="post" id="updateSnagForm" onSubmit="return true;">
+
+          <div class="form-group">
+            <div class="form-row">
+              <% if(response.updated && response.updated == false) { %>
+               <label style="color:red">Fields could not be updated.</label>
+              <% } %>
+              <% if(response.updated && response.updated == true) { %>
+               <label style="color:green">Fields Successfully Updated!</label>
+              <% } %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-row">
+                <label for="exampleDescription">Description</label>
+                <input class="form-control" id="description" name="description" type="text" aria-describedby="descriptionHelp" placeholder="Enter Description" value="<%=response.snag.description %>" >
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <label for="exampleInspector1">Inspector 1</label>
+                <input class="form-control" id="inspector1" name="inspector1" type="text" aria-describedby="inspector1Help" value="<%=response.snag.inspector1 %>" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputFunctionalOperator">Functional Operator</label>
+            <input class="form-control" id="functionaloperator" name="functionaloperator" type="text" aria-describedby="functionalOperatorHelp" value="<%= response.snag.functionaloperator %>" maxlength="30" >
+          </div>
+          <div class="form-group">
+            <label for="exampleInputinspector2">Inspector 2</label>
+            <input class="form-control" id="inspector2" name="inspector2" type="text" aria-describedby="inspector2Help" value="<%= response.snag.inspector2 %>" maxlength="30" >
+          </div>
+          <div class="form-group">
+            <label for="exampleInputinspector3">Inspector 3</label>
+            <input class="form-control" id="inspector3" name="inspector3" type="text" aria-describedby="inspector3Help" value="<%= response.snag.inspector3 %>" maxlength="30" >
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <label for="exampleInputCurrentStatus">Current Status</label>
+              <select name="currentstatus" id="currentstatus" value="<%=response.snag.currentstatus %>" class="form-control">
+                <option class="inspector 1" value="inspector 1">Inspector 1</option>
+                <option class="functional operator" value="functional operator">Function Operator</option>
+                <option class="inspector 2" value="inspector 2">Inspector 2</option>
+                <option class="inspector 3" value="inspector 3">Inspector 3</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-block" type="Submit">Update</button>
+        </form>
+      </div>
+      
+    </div>
+</div>
+
+
+<script>
+  document.getElementsByClassName("<%=response.snag.currentstatus %>")[0].selected = true; 
+</script>
+
+<% } else{%>
+<h2>No Record Found.</h2>
+<% } %>
+<% } %>
+

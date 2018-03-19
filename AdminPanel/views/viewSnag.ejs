@@ -1,0 +1,149 @@
+<% layout('layout') -%>
+
+
+<% if(user) { %>
+<div class="content-wrapper">
+    <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="/">Home</a>
+        </li>
+        <li class="breadcrumb-item active"><a href="/snag/list">Snag Table</a></li>
+      </ol>
+  <div class="card mb-3">
+      <div class="card-header">
+        <i class="fa fa-table"></i>Snag Table</div>
+          <div class="card-body">
+            <div class="table-responsive">
+                    <form>
+                  <% if (response && response.snags && response.snags.length>0) { %>
+                    <table class="table table-busered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                          <tr>
+                              <th></th>
+                              <th>Machine Id</th>
+                              <th>Category</th>
+                              <th>Sub Category</th>
+                              <th>Part Name</th>
+                              <th>Desciption</th>
+                              <th>Inspector 1</th>
+                              <th>Functional Operator</th>
+                              <th>Inspector 2</th>
+                              <th>Inspector 3</th>
+                              <th>Current Status</th>
+                              <th>Created On</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% response.snags.forEach( function( snag ){ %>
+                          <tr>
+                                    <td>
+                                        <input type="button" data-id="<%=snag.id %>" data-toggle="modal" data-target="#deleteModal"  class="open-DeleteDialog btn btn-warning" value="Delete"/>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <input type="button" class="updateButton btn btn-secondary" data-id="<%=snag.id %>" value="Update"> 
+                                    </td>
+                                    <td>
+                                        <%=snag.machineid %>
+                                    </td>
+                                    <td>
+                                       <%=snag.category %>
+                                    </td>
+                                    <td>
+                                        <%=snag.subcategory %>
+                                    </td>
+                                    <td>
+                                        <%=snag.partname %>
+                                    </td>
+                                    <td>
+                                        <%=snag.description %>
+                                    </td>
+                                    <td>
+                                        <%=snag.inspector1 %>
+                                    </td>
+                                    <td>
+                                        <%=snag.functionaloperator %>
+                                    </td>
+                                    <td>
+                                        <%=snag.inspector2 %>
+                                    </td>
+                                    <td>
+                                        <%=snag.inspector3 %>
+                                    </td>
+                                    <td>
+                                        <%=snag.currentstatus %>
+                                    </td>
+                                    <td>
+                                        <%= new moment(snag.created).format('Do MMMM, YYYY HH:mm:ss') %>
+                                    </td>
+                                </tr>
+                                
+                                <% }); %>
+                          </tbody>
+                        </table>
+                        <% } else{%>
+                        <h2>No Record Found.</h2>
+                        <% } %>
+                    </form>
+                </div>
+                <!-- Delete Modal-->
+                <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">Are you sure you want to delete this record ?  
+                      <input type="hidden" name="snagLabel" id="snagLabel" />     </div>
+                      
+                      <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-danger"  type="button" onClick="deleteRecord()" data-dismiss="modal">Delete</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+$(document).ready(function () {
+    $(".open-DeleteDialog").click(function () {
+          $('.modal-body #snagLabel').val($(this).data('id'));
+    });
+    $(".updateButton").click(function() {
+        var snag = $(this).data('id');
+        window.location.replace("/snag/update/" + snag);
+    });
+});
+
+
+function deleteRecord(){
+
+    console.log('....'+  $('#snagLabel').val());
+    var snag = $('#snagLabel').val();
+
+    $.ajax({
+        url: 'http://localhost:3001/snag/delete/' + snag,
+        type: 'DELETE',
+        success: function(data) {
+            console.log(data);
+            if(data.status == "success"){
+                location.reload();
+            }
+            else if(data.status == "noSnagFound") {
+                alert("Could not Find the snag");
+            }
+
+        }
+    });       
+}
+
+</script>
+<% } %>

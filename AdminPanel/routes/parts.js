@@ -1,20 +1,20 @@
 var express = require('express');
 var router = express.Router();
 var utils = require('../config/utils');
-var utilsMachineCategory = require('../config/utils_machineCategory');
+var utilsParts = require('../config/utils_parts');
 var moment = require('moment');
 
-/* GET users listing. */
+/* GET Users listing. */
 router.get('/add', utils.isLoggedIn,function(req, res) {
-  res.render('addMachineCategory', { title: 'Users',  user : req.user, status : null });
+  res.render('addParts', { title: 'parts',  user : req.user, status : null });
 });
 
 
 router.get('/list', utils.isLoggedIn, function(req, res) {
-    utilsMachineCategory.listAllMachineCategory().then(function(response) {
+    utilsParts.listAllParts().then(function(response) {
 
-        res.render('viewMachineCategory', {
-            user: req.user,
+        res.render('viewParts', {
+            user : req.user,
             title: '',
             response: response,
             moment: moment,
@@ -24,23 +24,23 @@ router.get('/list', utils.isLoggedIn, function(req, res) {
 
 
 router.post('/add', utils.isLoggedIn, function(req, res) {
-    // save machine category in database
+    // save parts in database
     console.log(req.body);
-    utilsMachineCategory.addNewMachineCategory(req.body['machinecategory']).then(function(response,err) {
+    utilsParts.addNewParts(req.body['partname']).then(function(response,err) {
             try{
             	console.log("error = ", err);
             	console.log("response = ", response);
             	console.log("after saving to db --- response = ", response);
             	if (response.status == "success") {
-                	res.render('addMachineCategory', {
+                	res.render('addParts', {
     		            user: req.user,
     		            status: 'success',
             		});
     			}
-    			if (response.status == "machineCategoryAlreadyExist") {
-                	res.render('addMachineCategory', {
+    			if (response.status == "partsAlreadyExist") {
+                	res.render('addParts', {
     		            user: req.user,
-    		            status: 'machineCategoryAlreadyExist',
+    		            status: 'partsAlreadyExist',
             		});
     			}
             } catch(err) {
@@ -51,8 +51,9 @@ router.post('/add', utils.isLoggedIn, function(req, res) {
 
 
 router.delete('/delete/:id', utils.isLoggedIn, function(req,res) {
-    console.log("Object Id = ",req.params.id);
-    utilsMachineCategory.deleteMachineCategory(req.params.id).then(function(response,err) {
+    console.log("id = ",req.params.id);
+    console.log("req body = ", req.body);
+    utilsParts.deleteParts(req.params.id).then(function(response,err) {
         try {
             console.log("error = ", err);
             console.log("response = ", response);
@@ -61,15 +62,16 @@ router.delete('/delete/:id', utils.isLoggedIn, function(req,res) {
                     status : 'success',
                 });
             }
-            else if(response.status == "noMachineCategoryFound") {
+            else if(response.status == "noPartsFound") {
                 res.json({
-                    status : 'noMachineCategoryFound'
+                    status : 'noPartsFound'
                 });
             }
         } catch(err) {
             console.log(err);
         }
-    });
+    }); 
 });
+
 
 module.exports = router;

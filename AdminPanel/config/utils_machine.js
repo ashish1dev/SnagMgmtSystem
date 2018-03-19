@@ -25,17 +25,17 @@ var addNewMachine = function(modelname) {
 
 var listAllMachine = function (){
 	var  deferred = Q.defer();
-	Machine.find({}, function(err, users) {
+	Machine.find({}, function(err, machines) {
 		if(err) {
 			console.log("error");
 
 			deferred.reject(new Error(err));
 		}
 
-		if(users && users != "undefined") {
+		if(machines && machines != "undefined") {
 			console.log("Got the Machine");
 			deferred.resolve({
-				'users' : users,
+				'machines' : machines,
 				status : 'success',
 			});
 		}
@@ -43,7 +43,7 @@ var listAllMachine = function (){
 		{
 			console.log("machine not found");
 			deferred.resolve({
-				'users' : null,
+				'machines' : null,
 				status : 'machineNotFound',
 			});
 		}
@@ -53,22 +53,22 @@ var listAllMachine = function (){
 
 var deleteMachine = function(id){
 	var deferred = Q.defer();
-	Machine.remove({'_id' : id}, function(err, user) {
+	Machine.remove({'_id' : id}, function(err, machine) {
 		if(err){
 			console.log("error = ", err);
 			deferred.reject(new Error(err));
 		}
-		if(user && user.result.n >= 1) {
-			console.log("Deleted User = ",user.result);
+		if(machine && machine.result.n >= 1) {
+			console.log("Deleted Machine = ",machine.result);
 			deferred.resolve({
 				'status': 'success',
 			});
 		}
-		else if(user && user.result.n == 0)
+		else if(machine && machine.result.n == 0)
 		{
-			console.log("user not found");
+			console.log("machine not found");
 			deferred.resolve({
-				status : 'noUserFound',
+				status : 'noMachineFound',
 			});
 		}
 	});
@@ -79,21 +79,21 @@ var updateMachine = function(id, modelname) {
 	var deferred = Q.defer();
 	Machine.findOneAndUpdate({'_id': id}, 
 								{"$set" : {'modelname' : modelname}},
-								{new : true}, function(err, user){
+								{new : true}, function(err, machine){
 		if (err) {
 	      deferred.reject(new Error(err));
 	    }
-	    if(user){
+	    if(machine){
 	    	deferred.resolve({
-	    		'user' : user,
+	    		'machine' : machine,
 	    		'status' : 'success',
 	    		'updated' : true
 	    	});
 	    }
 	    else{
 	    	deferred.resolve({
-	    		'user' : null,
-	    		'status' : 'noUserFound',
+	    		'machine' : null,
+	    		'status' : 'noMachineFound',
 	    		'updated' : false
 	    	});
 	    }
@@ -103,20 +103,20 @@ var updateMachine = function(id, modelname) {
 
 var getMachine = function(id) {
 	var deferred = Q.defer();
-	Machine.findOne({'_id' : id}, function(err,user){
+	Machine.findOne({'_id' : id}, function(err, machine){
 		if (err) {
 	      deferred.reject(new Error(err));
 	    }
-	    if(user && user != "undefined"){
+	    if(machine && machine != "undefined"){
 	    	deferred.resolve({
-	    		'user' : user,
+	    		'machine' : machine,
 	    		'status' : 'success'
 	    	});
 	    }
 	    else{
 	    	deferred.resolve({
-	    		'user' : null,
-	    		'status' : 'noUserFound'
+	    		'machine' : null,
+	    		'status' : 'noMachineFound'
 	    	});
 	    }
 	 });

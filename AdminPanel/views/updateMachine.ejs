@@ -2,13 +2,13 @@
 
 
 <% if(user) { %>
-<% if (response && response.user) { %>
+<% if (response && response.machine) { %>
 <div class="container">
     <div class="card card-register mx-auto mt-6">
       <div class="card-header">Update the Machine</div>
       <div class="card-body">
         
-        <form name="updateMachineForm" action="/machine/update/<%= response.user.id %>" method="post" id="updateMahcineForm" onSubmit="return true;">
+        <form name="updateMachineForm" action="/machine/update/<%= response.machine.id %>" method="post" id="updateMahcineForm" onSubmit="return true;">
 
           <div class="form-group">
             <div class="form-row">
@@ -24,18 +24,18 @@
           <div class="form-group">
             <div class="form-row">
                 <label for="exampleInputMachineId">Machine Id</label>
-                <input class="form-control" id="machineid" name="machineid" type="text" aria-describedby="machineidHelp" placeholder="Enter Machine Id" value="<%=response.user.machineid %>" disabled>
+                <input class="form-control" id="machineid" name="machineid" type="text" aria-describedby="machineidHelp" placeholder="Enter Machine Id" value="<%=response.machine.machineid %>" disabled>
             </div>
           </div>
           <div class="form-group">
             <div class="form-row">
               <label for="exampleQRCode">QR Code</label>
-                <input class="form-control" id="qrcode" name="qrcode" type="text" aria-describedby="nameHelp" value="<%=response.user.qrcode %>" disabled>
+                <input class="form-control" id="qrcode" name="qrcode" type="text" aria-describedby="nameHelp" value="<%=response.machine.qrcode %>" disabled>
             </div>
           </div>
           <div class="form-group">
             <label for="exampleInputModelName">Model name</label>
-            <input class="form-control" id="modelname" name="modelname" type="text" aria-describedby="ModelNameHelp" value="<%= response.user.modelname %>" maxlength="30" required>
+            <input class="form-control" id="modelname" name="modelname" type="text" aria-describedby="ModelNameHelp" value="<%= response.machine.modelname %>" maxlength="30" required>
           </div>
           <button class="btn btn-primary btn-block" type="Submit">Update</button>
         </form>

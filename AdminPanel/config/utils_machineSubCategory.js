@@ -6,15 +6,15 @@ var Q = require("q");
 
 var addNewMachineSubCategory = function(machinesubcategory) {
 	var deferred = Q.defer();
-	MachineSubCategory.findOne({'machinesubcategory' : machinesubcategory}, function(err, user) {
+	MachineSubCategory.findOne({'machinesubcategory' : machinesubcategory}, function(err, machinesubcategory) {
 		// console.log(err);
-		// console.log(user);
+		// console.log(machinesubcategory);
 		if(err){
 			console.log("error = ", err);
 			deferred.reject(new Error(err));
 		}
-		if(user) {
-			console.log("machine sub category already exist = ",user);
+		if(machinesubcategory) {
+			console.log("machine sub category already exist = ", machinesubcategory);
 			deferred.resolve({
 				'status': 'machineSubCategoryAlreadyExist'
 			});
@@ -43,17 +43,17 @@ var addNewMachineSubCategory = function(machinesubcategory) {
 
 var listAllMachineSubCategory = function (){
 	var  deferred = Q.defer();
-	MachineSubCategory.find({}, function(err, users) {
+	MachineSubCategory.find({}, function(err, machinesubcategorys) {
 		if(err) {
 			console.log("error");
 
 			deferred.reject(new Error(err));
 		}
 
-		if(users && users != "undefined") {
+		if(machinesubcategorys && machinesubcategorys != "undefined") {
 			console.log("Got the Machine Sub-Category");
 			deferred.resolve({
-				'users' : users,
+				'machinesubcategorys' : machinesubcategorys,
 				status : 'success',
 			});
 		}
@@ -61,7 +61,7 @@ var listAllMachineSubCategory = function (){
 		{
 			console.log("Machine Sub-Category not found");
 			deferred.resolve({
-				'users' : null,
+				'machinesubcategorys' : null,
 				status : 'machineSubCategoryNotFound',
 			});
 		}
@@ -71,19 +71,19 @@ var listAllMachineSubCategory = function (){
 
 var deleteMachineSubCategory = function(id){
 	var deferred = Q.defer();
-	MachineSubCategory.remove({'_id' : id}, function(err, user) {
-		console.log("user = ", user);
+	MachineSubCategory.remove({'_id' : id}, function(err, machinesubcategory) {
+		console.log("machinesubcategory = ", machinesubcategory);
 		if(err){
 			console.log("error = ", err);
 			deferred.reject(new Error(err));
 		}
-		if(user && user.result.n >= 1) {
-			console.log("Deleted Machine Sub-Category = ",user.result);
+		if(machinesubcategory && machinesubcategory.result.n >= 1) {
+			console.log("Deleted Machine Sub-Category = ",machinesubcategory.result);
 			deferred.resolve({
 				'status': 'success',
 			});
 		}
-		else if(user && user.result.n == 0)
+		else if(machinesubcategory && machinesubcategory.result.n == 0)
 		{
 			console.log("Machine Sub-Category not found");
 			deferred.resolve({
@@ -93,56 +93,6 @@ var deleteMachineSubCategory = function(id){
 	});
 	return deferred.promise;
 }
-
-
-//temproraliy not using the update finction
-// var updateMachineSubCategory = function(id) {
-// 	var deferred = Q.defer();
-// 	MachineSubCategory.findOneAndUpdate({'_id': id}, 
-// 								{"$set" : {'machinesubcategory' : machinesubcategory}},
-// 								{new : true}, function(err, user){
-// 		if (err) {
-// 	      deferred.reject(new Error(err));
-// 	    }
-// 	    if(user){
-// 	    	deferred.resolve({
-// 	    		'user' : user,
-// 	    		'status' : 'success',
-// 	    		'updated' : true
-// 	    	});
-// 	    }
-// 	    else{
-// 	    	deferred.resolve({
-// 	    		'user' : null,
-// 	    		'status' : 'noMachineSubCategoryFound',
-// 	    		'updated' : false
-// 	    	});
-// 	    }
-// 	 });
-// 	return deferred.promise;
-// }
-
-// var getMachineSubCategory = function(id) {
-// 	var deferred = Q.defer();
-// 	MachineSubCategory.findOne({'_id' : id}, function(err, user){
-// 		if (err) {
-// 	      deferred.reject(new Error(err));
-// 	    }
-// 	    if(user && user != "undefined"){
-// 	    	deferred.resolve({
-// 	    		'user' : user,
-// 	    		'status' : 'success'
-// 	    	});
-// 	    }
-// 	    else{
-// 	    	deferred.resolve({
-// 	    		'user' : null,
-// 	    		'status' : 'noMachineSubCategoryFound'
-// 	    	});
-// 	    }
-// 	 });
-// 	return deferred.promise;
-// }
 
 
 module.exports = {addNewMachineSubCategory : addNewMachineSubCategory,
