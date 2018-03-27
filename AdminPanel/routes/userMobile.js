@@ -134,5 +134,31 @@ router.post('/update/:username', utils.isLoggedIn, function(req,res) {
     });
 });
 
+router.post('/authenticateMobileUser', function(req, res) {
+    console.log("req body authenticateMobileUser= ", req.body);
+    console.log("req params authenticateMobileUser= ", req.params);
+    utilsMobileUser.authenticateMobileUser(req.body['username'],
+                                    req.body['password']).then(function(response, err) {
+
+
+        try{
+            if(response.status == "success") {
+                res.json( {
+                    'user' : response.user,
+                    'status' : 'success'
+                });
+            }
+            else if(response.status == "noUserFound") {
+                res.json( {
+                    'user' : response.user,
+                    'status' : 'noUserFound'
+                })
+            }
+        }catch (err) {
+            console.log(err);
+        }
+    });
+});
+
 
 module.exports = router;

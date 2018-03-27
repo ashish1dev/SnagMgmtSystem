@@ -145,10 +145,34 @@ var getMobileUser = function(username) {
 	return deferred.promise;
 }
 
+var authenticateMobileUser = function(username, password) {
+	var deferred = Q.defer();
+	MobileUser.find({'username' : username, 'password' : password}, function(err,user) {
+		console.log("user authenticateMobileUser = ", user);
+		if(err) {
+			deferred.reject(new Error(err));
+		}
+		if(user && user.length == 0){
+			deferred.resolve({
+				'user' : null,
+				'status' : 'noUserFound'
+			});
+		}
+		else if(user && user.length >=1){
+			deferred.resolve({
+				'user' : user[0],
+				'status' : 'success'
+			});
+		}
+	});
+	return deferred.promise;
+}
+
 
 module.exports = {addNewMobileUser : addNewMobileUser,
 			  	  listAllMobileUsers : listAllMobileUsers,
 			  	  deleteMobileUser : deleteMobileUser,
 			  	  updateMobileUser : updateMobileUser,
-			  	  getMobileUser : getMobileUser
+			  	  getMobileUser : getMobileUser,
+			  	  authenticateMobileUser : authenticateMobileUser
 			  	};

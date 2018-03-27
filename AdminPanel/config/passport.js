@@ -82,7 +82,7 @@ module.exports = function(passport) {
 
         // asynchronous
         // User.findOne wont fire unless data is sent back
-        console.log("req = ", req.body);
+        console.log("req signup = ", req.body);
 
         process.nextTick(function() {
 

@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +16,7 @@
         android:theme="@style/AppTheme">
         <activity android:name="com.ectolus.SnagMgmtSystem.ScanBtnActivity" />
         <activity
-            android:name="com.ectolus.SnagMgmtSystem.Main2Activity"
+            android:name="com.ectolus.SnagMgmtSystem.ListViewActivity"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
@@ -30,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.ectolus.SnagMgmtSystem.Login"
+            android:name="com.ectolus.SnagMgmtSystem.LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

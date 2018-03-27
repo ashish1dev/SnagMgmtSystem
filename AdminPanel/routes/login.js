@@ -16,5 +16,4 @@ router.post('/', passport.authenticate('local-login', {
     failureFlash : true // allow flash messages
 }));
 
-
 module.exports = router;

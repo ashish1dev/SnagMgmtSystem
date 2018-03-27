@@ -2,7 +2,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="@color/primary1"
+    android:theme="@style/AppTheme.Dark">
 
     <LinearLayout
         android:orientation="vertical"
@@ -18,7 +20,7 @@
             android:layout_marginBottom="24dp"
             android:layout_gravity="center_horizontal" />
 
-        <!-- Email Label -->
+        <!-- Username Label -->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:hint="Username" />
+                android:hint="Username"
+                android:textColorHint="@color/accent" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Label -->
@@ -41,7 +44,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="Password"/>
+                android:textColor="@color/accent"
+                android:hint="Password"
+                android:textColorHint="@color/accent"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatButton
@@ -51,7 +56,9 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
-            android:text="Login"/>
+            android:text="Login"
+            android:textColor="@color/accent"
+            android:background="@color/primary_dark"/>
 
     </LinearLayout>
 </ScrollView>

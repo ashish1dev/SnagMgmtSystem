@@ -1,14 +1,16 @@
 package com.ectolus.SnagMgmtSystem;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
 public class SplashActivity extends Activity {
 
     // Splash screen timer
-    private static int SPLASH_TIME_OUT = 3000;
+    private static int SPLASH_TIME_OUT = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +28,16 @@ public class SplashActivity extends Activity {
             public void run() {
                 // This method will be executed once the timer is over
                 // Start your app main activity
-                Intent i = new Intent(getApplication(), Login.class);
-                startActivity(i);
+                SharedPreferences mPrefs = getSharedPreferences("USER_PREFERENCES", Context.MODE_PRIVATE);
+                String str = mPrefs.getString("username", null);
+                if (str == null) {
+                    Intent i = new Intent(getApplication(), LoginActivity.class);
+                    startActivity(i);
+                } else {
+                    Intent i = new Intent(getApplication(), ListViewActivity.class);
+                    startActivity(i);
+                }
+
 
                 // close this activity
                 finish();
