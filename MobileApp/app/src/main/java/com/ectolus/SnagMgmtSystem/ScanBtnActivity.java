@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
@@ -28,6 +29,7 @@ public class ScanBtnActivity extends Activity {
                 startActivityForResult( i,REQUEST_CODE_QR_SCAN);
             }
         });
+
 
     }
 
@@ -64,17 +66,19 @@ public class ScanBtnActivity extends Activity {
                 return;
             //Getting the passed result
             String result = data.getStringExtra("com.ectolus.qrcodescanner.got_qr_scan_relult");
-            //Log.d(LOGTAG,"Have scan result in your app activity :"+ result);
-            AlertDialog alertDialog = new AlertDialog.Builder(ScanBtnActivity.this).create();
-            alertDialog.setTitle("Scan result");
-            alertDialog.setMessage(result);
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-            alertDialog.show();
+            Intent intent = new Intent(getApplication(), AddSnagActivity.class);
+            intent.putExtra("machineID", result);
+            startActivity(intent);
+//            AlertDialog alertDialog = new AlertDialog.Builder(ScanBtnActivity.this).create();
+//            alertDialog.setTitle("Scan result");
+//            alertDialog.setMessage(result);
+//            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+//                    new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.dismiss();
+//                        }
+//                    });
+//            alertDialog.show();
 
         }
     }

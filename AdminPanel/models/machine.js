@@ -1,6 +1,7 @@
 // load the things we need
 var mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
+var qr = require('qr-image');
 
 // define the schema for our user model
 var machineSchema = mongoose.Schema({
@@ -16,7 +17,7 @@ var machineSchema = mongoose.Schema({
       },
 });
 
-module.exports = mongoose.model('machineSchema', machineSchema);
+
 autoIncrement.initialize(mongoose.connection);
 machineSchema.plugin(autoIncrement.plugin, {
   model: 'machineSchema',

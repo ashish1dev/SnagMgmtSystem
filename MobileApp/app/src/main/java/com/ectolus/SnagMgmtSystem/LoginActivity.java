@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncHttpPost.As
 
     ProgressDialog progressDialog;
 
-    private static String url = "http://ae283788.ngrok.io/usermobile/authenticateMobileUser";
+    private static String url = "http://f162828c.ngrok.io/usermobile/authenticateMobileUser";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

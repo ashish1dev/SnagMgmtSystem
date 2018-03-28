@@ -18,6 +18,7 @@
   var machine = require('./routes/machine');
   var parts = require('./routes/parts');
   var snag = require('./routes/snag');
+  var qrCode = require('./routes/qrCode');
 
   var config = require('./config');
   var dbConfig = require('./models/db.js');
@@ -26,9 +27,9 @@
   var flash = require('connect-flash');
   var app = express();
 
-  mongoose.connect(dbConfig.url);
-
+ mongoose.connect(dbConfig.url);
   require('./config/passport')(passport); // pass passport for configuration
+
 
   // view engine setup
   app.set('views', path.join(__dirname, 'views'));
@@ -65,6 +66,7 @@
   app.use('/machineSubCategory', machineSubCategory);
   app.use('/parts', parts);
   app.use('/snag', snag);
+  app.use('/qrCode', qrCode);
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {

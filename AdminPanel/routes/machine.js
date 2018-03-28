@@ -3,6 +3,7 @@ var router = express.Router();
 var utils = require('../config/utils');
 var utilsMachine = require('../config/utils_machine');
 var moment = require('moment');
+var utilsQrCode = require('../config/utils_qrCode');
 
 /* GET machines listing. */
 router.get('/add', utils.isLoggedIn,function(req, res) {
@@ -23,7 +24,7 @@ router.get('/list', utils.isLoggedIn, function(req, res) {
 });
 
 
-router.post('/add', utils.isLoggedIn, function(req, res) {
+router.post('/add', function(req, res) {
     // save machine in database
     console.log(req.body);
     utilsMachine.addNewMachine(req.body['modelname']).then(function(response,err) {
@@ -32,10 +33,19 @@ router.post('/add', utils.isLoggedIn, function(req, res) {
             	console.log("response = ", response);
             	console.log("after saving to db --- response = ", response);
             	if (response.status == "success") {
-                	res.render('addMachine', {
-    		            user: req.user,
-    		            status: 'success',
-            		});
+                    utilsQrCode.generateQrCode(response.machineID).then(function(responseQr, err) {
+                        try{
+                            if(responseQr.status == "success") {
+                                utilsQrCode.dumpQrCode(response.machineID, responseQr.imagePath, 'image/svg');
+                                res.send({
+                                    status : 'success',
+                                    path : responseQr.imagePath
+                                });
+                            }
+                        } catch(err) {
+                                console.log(err);
+                        }
+                    });
     			}
     			if (response.status == "machineAlreadyExist") {
                 	res.render('addMachine', {

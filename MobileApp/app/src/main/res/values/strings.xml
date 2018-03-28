@@ -5,7 +5,32 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="category_prompt">Choose a Category</string>
+
+    <string-array name="category_name">
+        <item>Heavy</item>
+        <item>Light</item>
+    </string-array>
+
+    <string name="subCategory_prompt">Choose a Sub-Category</string>
+
+    <string-array name="subCategory_name">
+        <item>Front</item>
+        <item>Middle</item>
+        <item>Back</item>
+    </string-array>
+
+    <string name="partname_prompt">Choose a Part Name</string>
+
+    <string-array name="partname">
+        <item>Lever</item>
+        <item>Handle</item>
+    </string-array>
+
+
     <string name="action_settings">Settings</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_login">Login</string>
+    <string name="title_activity_add_snag">AddSnagActivity</string>
+    <string name="title_activity_add">AddActivity</string>
 </resources>

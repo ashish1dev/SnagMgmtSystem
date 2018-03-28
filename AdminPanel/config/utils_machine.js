@@ -8,14 +8,17 @@ var addNewMachine = function(modelname) {
 	var deferred = Q.defer();
 	var newMachine = new Machine();
 		newMachine.modelname = modelname;
-		newMachine.save(function(err) {
+		newMachine.save(function(err, machine) {
 		if(err) {
 			deferred.reject(new Error(err));
 		}
 		else{
+			console.log(machine);
+
 			console.log("success in dumping newMachine to db");
 			deferred.resolve({
-			'status' : 'success'
+			'status' : 'success',
+			'machineID' : machine.machineid
 			});
 		}	
 	});
