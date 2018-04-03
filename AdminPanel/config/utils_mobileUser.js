@@ -4,9 +4,9 @@ var Q = require("q");
 
 
 
-var addNewMobileUser = function(firstname, lastname, username, usertype, password) {
+var addNewMobileUser = function(firstName, lastName, userName, userType, password) {
 	var deferred = Q.defer();
-	MobileUser.findOne({'username' : username}, function(err,user) {
+	MobileUser.findOne({'userName' : userName}, function(err,user) {
 		// console.log(err);
 		// console.log(user);
 		if(err){
@@ -22,10 +22,10 @@ var addNewMobileUser = function(firstname, lastname, username, usertype, passwor
 		else 
 		{	
 			var newMobileUser = new MobileUser();
-			newMobileUser.firstname = firstname;
-			newMobileUser.lastname = lastname;
-			newMobileUser.username = username;
-			newMobileUser.usertype = usertype;
+			newMobileUser.firstName = firstName;
+			newMobileUser.lastName = lastName;
+			newMobileUser.userName = userName;
+			newMobileUser.userType = userType;
 			newMobileUser.password = password;
 			newMobileUser.save(function(err) {
 				if(err) {
@@ -73,9 +73,9 @@ var listAllMobileUsers = function (){
 	return deferred.promise;
 }
 
-var deleteMobileUser = function(username){
+var deleteMobileUser = function(userName){
 	var deferred = Q.defer();
-	MobileUser.remove({'username' : username}, function(err, user) {
+	MobileUser.remove({'userName' : userName}, function(err, user) {
 		if(err){
 			console.log("error = ", err);
 			deferred.reject(new Error(err));
@@ -97,10 +97,10 @@ var deleteMobileUser = function(username){
 	return deferred.promise;
 }
 
-var updateMobileUser = function(firstname, lastname, username, usertype, password) {
+var updateMobileUser = function(firstName, lastName, userName, userType, password) {
 	var deferred = Q.defer();
-	MobileUser.findOneAndUpdate({'username': username}, 
-								{"$set" : {'firstname' : firstname, 'lastname' : lastname, 'usertype' : usertype, 'password' : password}},
+	MobileUser.findOneAndUpdate({'userName': userName}, 
+								{"$set" : {'firstName' : firstName, 'lastName' : lastName, 'userType' : userType, 'password' : password}},
 								{new : true}, function(err, user){
 		if (err) {
 	      deferred.reject(new Error(err));
@@ -123,9 +123,9 @@ var updateMobileUser = function(firstname, lastname, username, usertype, passwor
 	return deferred.promise;
 }
 
-var getMobileUser = function(username) {
+var getMobileUser = function(userName) {
 	var deferred = Q.defer();
-	MobileUser.findOne({'username' : username}, function(err,user){
+	MobileUser.findOne({'userName' : userName}, function(err,user){
 		if (err) {
 	      deferred.reject(new Error(err));
 	    }
@@ -145,9 +145,9 @@ var getMobileUser = function(username) {
 	return deferred.promise;
 }
 
-var authenticateMobileUser = function(username, password) {
+var authenticateMobileUser = function(userName, password) {
 	var deferred = Q.defer();
-	MobileUser.find({'username' : username, 'password' : password}, function(err,user) {
+	MobileUser.find({'userName' : userName, 'password' : password}, function(err,user) {
 		console.log("user authenticateMobileUser = ", user);
 		if(err) {
 			deferred.reject(new Error(err));

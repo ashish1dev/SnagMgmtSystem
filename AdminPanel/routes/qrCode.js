@@ -5,7 +5,7 @@ var utilsQrCode = require('../config/utils_qrCode');
 var moment = require('moment');
  
 router.post('/qrGenerate', function(req, res) {
-	utilsQrCode.generateQrCode(req.body['machineid']).then(function(response,err) {
+	utilsQrCode.generateQrCode(req.body['machineID']).then(function(response,err) {
 		try{
 			if(response.status == "success") {
                 res.send({

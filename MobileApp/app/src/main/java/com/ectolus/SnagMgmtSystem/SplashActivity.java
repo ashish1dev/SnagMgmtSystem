@@ -29,7 +29,7 @@ public class SplashActivity extends Activity {
                 // This method will be executed once the timer is over
                 // Start your app main activity
                 SharedPreferences mPrefs = getSharedPreferences("USER_PREFERENCES", Context.MODE_PRIVATE);
-                String str = mPrefs.getString("username", null);
+                String str = mPrefs.getString("userName", null);
                 if (str == null) {
                     Intent i = new Intent(getApplication(), LoginActivity.class);
                     startActivity(i);

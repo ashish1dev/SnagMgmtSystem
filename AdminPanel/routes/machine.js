@@ -27,7 +27,7 @@ router.get('/list', utils.isLoggedIn, function(req, res) {
 router.post('/add', function(req, res) {
     // save machine in database
     console.log(req.body);
-    utilsMachine.addNewMachine(req.body['modelname']).then(function(response,err) {
+    utilsMachine.addNewMachine(req.body['model_Name']).then(function(response,err) {
             try{
             	console.log("error = ", err);
             	console.log("response = ", response);
@@ -113,7 +113,7 @@ router.post('/update/:id', utils.isLoggedIn, function(req,res) {
     console.log("id = ",req.params.id);
     console.log("req body = ", req.body);
     utilsMachine.updateMachine(req.params.id,
-                               req.body['modelname']).then(function(response,err) {
+                               req.body['model_name']).then(function(response,err) {
         try{
             console.log("error = ", err);
             console.log("response = ", response);

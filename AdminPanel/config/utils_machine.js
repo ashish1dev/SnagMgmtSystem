@@ -4,10 +4,10 @@ var Q = require("q");
 
 
 
-var addNewMachine = function(modelname) {
+var addNewMachine = function(model_Name) {
 	var deferred = Q.defer();
 	var newMachine = new Machine();
-		newMachine.modelname = modelname;
+		newMachine.model_Name = model_Name;
 		newMachine.save(function(err, machine) {
 		if(err) {
 			deferred.reject(new Error(err));
@@ -22,7 +22,6 @@ var addNewMachine = function(modelname) {
 			});
 		}	
 	});
-
     return deferred.promise;
 };
 
@@ -78,10 +77,10 @@ var deleteMachine = function(id){
 	return deferred.promise;
 }
 
-var updateMachine = function(id, modelname) {
+var updateMachine = function(id, modelName) {
 	var deferred = Q.defer();
 	Machine.findOneAndUpdate({'_id': id}, 
-								{"$set" : {'modelname' : modelname}},
+								{"$set" : {'modelName' : modelName}},
 								{new : true}, function(err, machine){
 		if (err) {
 	      deferred.reject(new Error(err));

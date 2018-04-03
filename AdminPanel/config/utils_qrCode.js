@@ -5,7 +5,7 @@ var fs = require("fs");
 
 
 
-var generateQrCode = function(machineid){
+var generateQrCode = function(machineID){
 	var deferred = Q.defer();
 	var qr = require('qr-image'); 
 	var qr_svg = qr.image(machineid, { type: 'svg' });
@@ -21,10 +21,10 @@ var generateQrCode = function(machineid){
 	return deferred.promise;
 }
 
-var dumpQrCode = function(machineid, path, contentTypeName) {
+var dumpQrCode = function(machineID, path, contentTypeName) {
 	var deferred = Q.defer();
 	console.log("dumpqrcode is being called");
-	Machine.update({'machineid' : machineid},
+	Machine.update({'machineID' : machineID},
 					{"$set" : {'qrcode.data' : fs.readFileSync(path), 'qrcode.contentType' : contentTypeName}},
 					{new : true},function(err,qrcode) {
 						if (err) {

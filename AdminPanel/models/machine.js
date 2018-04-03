@@ -1,16 +1,15 @@
 // load the things we need
 var mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
-var qr = require('qr-image');
 
 // define the schema for our user model
 var machineSchema = mongoose.Schema({
-      machineid : String,
-      qrcode : { 
+      machineID : String,
+      qrCode : { 
         data: Buffer, 
         contentType: String 
       },
-      modelname : String,
+      model_Name : String,
       created: {
         type: Date,
         default: Date.now
@@ -21,7 +20,7 @@ var machineSchema = mongoose.Schema({
 autoIncrement.initialize(mongoose.connection);
 machineSchema.plugin(autoIncrement.plugin, {
   model: 'machineSchema',
-  field: 'machineid',
+  field: 'machineID',
   startAt: 1,
   incrementBy: 1
 });

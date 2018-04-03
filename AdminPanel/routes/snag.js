@@ -22,34 +22,56 @@ router.get('/list', utils.isLoggedIn, function(req, res) {
     });
 });
 
+router.post('/getSnagsBySnagType', function(req, res) {
+    console.log("req.body = ", req.body);
+    // res.json({
+    //             'status' : "success"
+    //         });
+    utilsSnag.listOfSnagBySnagType(req.body['currentStatusOfSnag']).then(function(response) {
+        console.log("response in getAllSnags = ", response);
 
-router.post('/add', utils.isLoggedIn, function(req, res) {
+        if(response.status == "success"){
+            res.json({
+                'snag' : response.snags,
+                'status' : "success"
+            });
+        }
+        else if(response.status == "snagsNotFound"){
+            res.json({
+                'snag' : response.snags,
+                'status' : "snagsNotFound"
+            });
+        }
+    });
+});
+
+
+router.post('/add', function(req, res) {
     // save snag in database
     console.log(req.body);
-    utilsSnag.addNewSnag(req.body['machineid'],
+    utilsSnag.addNewSnag(req.body['machineID'],
                          req.body['category'],
-                         req.body['subcategory'],
-                         req.body['partname'],
+                         req.body['subCategory'],
+                         req.body['partName'],
                          req.body['description'],
-                         req.body['inspector1'],
-                         req.body['functionaloperator'],
-                         req.body['inspector2'],
-                         req.body['inspector3'],
-                         req.body['currentstatus']).then(function(response,err) {
+                         req.body['inspector1UserName'],
+                         req.body['functionalOperatorUserName'],
+                         req.body['inspector2UserName'],
+                         req.body['inspector3UserName'],
+                         req.body['currentStatusOfSnag']).then(function(response,err) {
             try{
             	console.log("error = ", err);
             	console.log("response = ", response);
             	console.log("after saving to db --- response = ", response);
             	if (response.status == "success") {
-                	res.render('addSnag', {
-    		            user: req.user,
+                	res.json({
     		            status: 'success',
+                        'snagID' : response.snagID
             		});
     			}
-    			if (response.status == "snagAlreadyExist") {
-                	res.render('addSnag', {
-    		            user: req.user,
-    		            status: 'snagAlreadyExist',
+    			else if (response.status == "failed") {
+                	res.json({
+    		            status: 'failed',
             		});
     			}
             } catch(err) {
@@ -111,11 +133,11 @@ router.post('/update/:id', utils.isLoggedIn, function(req,res) {
     console.log("req body = ", req.body);
     utilsSnag.updateSnag(req.params.id,
                                req.body['description'],
-                               req.body['inspector1'],
-                               req.body['functionaloperator'],
-                               req.body['inspector2'],
-                               req.body['inspector3'],
-                               req.body['currentstatus']).then(function(response,err) {
+                               req.body['inspector1UserName'],
+                               req.body['functionalOperatorUserName'],
+                               req.body['inspector2UserName'],
+                               req.body['inspector3UserName'],
+                               req.body['currentStatusOfSnag']).then(function(response,err) {
         try{
             console.log("error = ", err);
             console.log("response = ", response);

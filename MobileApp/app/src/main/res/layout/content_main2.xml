@@ -8,4 +8,9 @@
     tools:context="com.ectolus.SnagMgmtSystem.ListViewActivity"
     tools:showIn="@layout/app_bar_main2">
 
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
 </android.support.constraint.ConstraintLayout>

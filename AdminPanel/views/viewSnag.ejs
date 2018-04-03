@@ -44,34 +44,34 @@
                                         <input type="button" class="updateButton btn btn-secondary" data-id="<%=snag.id %>" value="Update"> 
                                     </td>
                                     <td>
-                                        <%=snag.machineid %>
+                                        <%=snag.machineID %>
                                     </td>
                                     <td>
                                        <%=snag.category %>
                                     </td>
                                     <td>
-                                        <%=snag.subcategory %>
+                                        <%=snag.subCategory %>
                                     </td>
                                     <td>
-                                        <%=snag.partname %>
+                                        <%=snag.partName %>
                                     </td>
                                     <td>
                                         <%=snag.description %>
                                     </td>
                                     <td>
-                                        <%=snag.inspector1 %>
+                                        <%=snag.inspector1UserName %>
                                     </td>
                                     <td>
-                                        <%=snag.functionaloperator %>
+                                        <%=snag.functionaloperatorUserName %>
                                     </td>
                                     <td>
-                                        <%=snag.inspector2 %>
+                                        <%=snag.inspector2UserName %>
                                     </td>
                                     <td>
-                                        <%=snag.inspector3 %>
+                                        <%=snag.inspector3UserName %>
                                     </td>
                                     <td>
-                                        <%=snag.currentstatus %>
+                                        <%=snag.currentstatusOfSnag %>
                                     </td>
                                     <td>
                                         <%= new moment(snag.created).format('Do MMMM, YYYY HH:mm:ss') %>

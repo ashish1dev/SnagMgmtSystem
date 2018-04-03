@@ -22,7 +22,7 @@ import org.json.JSONObject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class LoginActivity extends AppCompatActivity implements AsyncHttpPost.AsyncResponse {
+public class LoginActivity extends AppCompatActivity implements ProcessFinishInterface{
     private static final String TAG = "LoginActivity";
 
     @BindView(R.id.input_username)
@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncHttpPost.As
 
     ProgressDialog progressDialog;
 
-    private static String url = "http://f162828c.ngrok.io/usermobile/authenticateMobileUser";
+    private static String url = "http://89dfe9f9.ngrok.io/usermobile/authenticateMobileUser";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncHttpPost.As
         String password = _passwordText.getText().toString();
 
 
-        new AsyncHttpPost(this).execute(new String[]{url, username, password});
+        new LoginAsyncHttpPost(this).execute(new String[]{url, username, password});
 //        new android.os.Handler().postDelayed(
 //                new Runnable() {
 //                    public void run() {
@@ -94,10 +94,10 @@ public class LoginActivity extends AppCompatActivity implements AsyncHttpPost.As
         moveTaskToBack(true);
     }
 
-    public void onLoginSuccess() {
-        _loginButton.setEnabled(true);
+//    public void onLoginSuccess() {
+//        _loginButton.setEnabled(true);
 //        finish();
-    }
+//    }
 
     public void onLoginFailed() {
         Toast.makeText(getBaseContext(), "LoginActivity failed", Toast.LENGTH_LONG).show();
@@ -184,10 +184,10 @@ public class LoginActivity extends AppCompatActivity implements AsyncHttpPost.As
 
 
     public boolean setUserPrefrences(JSONObject usr) throws JSONException {
-        String firstname = null;
-        String lastname = null;
-        String username = null;
-        String usertype = null;
+        String firstName = null;
+        String lastName = null;
+        String userName = null;
+        String userType = null;
         String id = null;
         JSONArray nameArray = usr.names();
         JSONArray valArray = usr.toJSONArray(nameArray);
@@ -197,17 +197,17 @@ public class LoginActivity extends AppCompatActivity implements AsyncHttpPost.As
                 JSONArray nameArray2 = json2.names();
                 JSONArray valArray2 = json2.toJSONArray(nameArray2);
                 for (int j = 0; j < valArray2.length(); j++) {
-                    if (nameArray2.getString(j).equals("firstname")) {
-                        firstname = valArray2.getString(j);
+                    if (nameArray2.getString(j).equals("firstName")) {
+                        firstName = valArray2.getString(j);
                     }
-                    if (nameArray2.getString(j).equals("lastname")) {
-                        lastname = valArray2.getString(j);
+                    if (nameArray2.getString(j).equals("lastName")) {
+                        lastName = valArray2.getString(j);
                     }
-                    if (nameArray2.getString(j).equals("username")) {
-                        username = valArray2.getString(j);
+                    if (nameArray2.getString(j).equals("userName")) {
+                        userName = valArray2.getString(j);
                     }
-                    if (nameArray2.getString(j).equals("usertype")) {
-                        usertype = valArray2.getString(j);
+                    if (nameArray2.getString(j).equals("userType")) {
+                        userType = valArray2.getString(j);
                     }
                     if (nameArray2.getString(j).equals("_id")) {
                         id = valArray2.getString(j);
@@ -215,10 +215,10 @@ public class LoginActivity extends AppCompatActivity implements AsyncHttpPost.As
                     Log.i("TAG", "" + j + " = " + nameArray2.getString(j) + " = " + valArray2.getString(j) + ";");
                 }
 
-                Log.d("TAG firstname ", firstname);
-                Log.d("TAG lastname ", lastname);
-                Log.d("TAG username", username);
-                Log.d("TAG usertype", usertype);
+                Log.d("TAG firstname ", firstName);
+                Log.d("TAG lastname ", lastName);
+                Log.d("TAG username", userName);
+                Log.d("TAG usertype", userType);
                 Log.d("TAG id", id);
             }
             SharedPreferences users;
@@ -226,17 +226,17 @@ public class LoginActivity extends AppCompatActivity implements AsyncHttpPost.As
 
             SharedPreferences.Editor editor = users.edit();
             editor.putString("id", id);
-            editor.putString("firstname", firstname);
-            editor.putString("lastname", lastname);
-            editor.putString("username", username);
-            editor.putString("usertype", usertype);
+            editor.putString("firstName", firstName);
+            editor.putString("lastName", lastName);
+            editor.putString("userName", userName);
+            editor.putString("userType", userType);
             editor.commit();
 
-            String username1 = users.getString("username", null);
+            String username1 = users.getString("userName", null);
             Log.d("check", String.valueOf(username1));
 
         }
-        if (firstname != null && lastname != null && username != null && usertype != null && id != null) {
+        if (firstName != null && lastName != null && userName != null && userType != null && id != null) {
             return true;
         } else {
             return false;

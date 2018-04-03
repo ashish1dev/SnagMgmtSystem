@@ -4,9 +4,9 @@ var Q = require("q");
 
 
 
-var addNewMachineCategory = function(machinecategory) {
+var addNewMachineCategory = function(machineCategory) {
 	var deferred = Q.defer();
-	MachineCategory.findOne({'machinecategory' : machinecategory}, function(err, machinecategory) {
+	MachineCategory.findOne({'machineCategory' : machineCategory}, function(err, machineCategory) {
 		// console.log(err);
 		// console.log(machinecategory);
 		if(err){
@@ -43,7 +43,7 @@ var addNewMachineCategory = function(machinecategory) {
 
 var listAllMachineCategory = function (){
 	var  deferred = Q.defer();
-	MachineCategory.find({}, function(err, machinecategorys) {
+	MachineCategory.find({}, function(err, machineCategorys) {
 		if(err) {
 			console.log("error");
 
@@ -53,7 +53,7 @@ var listAllMachineCategory = function (){
 		if(machinecategorys && machinecategorys != "undefined") {
 			console.log("Got the Machine Category");
 			deferred.resolve({
-				'machinecategorys' : machinecategorys,
+				'machineCategorys' : machineCategorys,
 				status : 'success',
 			});
 		}
@@ -61,7 +61,7 @@ var listAllMachineCategory = function (){
 		{
 			console.log("Machine Category not found");
 			deferred.resolve({
-				'machinecategorys' : null,
+				'machineCategorys' : null,
 				status : 'machineCategoryNotFound',
 			});
 		}
@@ -71,19 +71,19 @@ var listAllMachineCategory = function (){
 
 var deleteMachineCategory = function(id){
 	var deferred = Q.defer();
-	MachineCategory.remove({'_id' : id}, function(err, machinecategory) {
+	MachineCategory.remove({'_id' : id}, function(err, machineCategory) {
 		console.log("machinecategory = ", machinecategory);
 		if(err){
 			console.log("error = ", err);
 			deferred.reject(new Error(err));
 		}
-		if(machinecategory && machinecategory.result.n >= 1) {
-			console.log("Deleted Machine Category = ", machinecategory.result);
+		if(machineCategory && machineCategory.result.n >= 1) {
+			console.log("Deleted Machine Category = ", machineCategory.result);
 			deferred.resolve({
 				'status': 'success',
 			});
 		}
-		else if(machinecategory && machinecategory.result.n == 0)
+		else if(machineCategory && machineCategory.result.n == 0)
 		{
 			console.log("Machine Category not found");
 			deferred.resolve({

@@ -26,10 +26,10 @@ router.get('/list', utils.isLoggedIn, function(req, res) {
 router.post('/add', utils.isLoggedIn, function(req, res) {
     // save user in database
     console.log(req.body);
-    utilsMobileUser.addNewMobileUser(req.body['firstname'],
-        req.body['lastname'],
-        req.body['username'],
-        req.body['usertype'],
+    utilsMobileUser.addNewMobileUser(req.body['firstName'],
+        req.body['lastName'],
+        req.body['userName'],
+        req.body['userType'],
         req.body['password'],).then(function(response,err) {
             try{
             	console.log("error = ", err);
@@ -54,7 +54,7 @@ router.post('/add', utils.isLoggedIn, function(req, res) {
 });
 
 
-router.delete('/delete/:username', utils.isLoggedIn, function(req,res) {
+router.delete('/delete/:userName', utils.isLoggedIn, function(req,res) {
     console.log("username = ",req.params.username);
     console.log("req body = ", req.body);
     utilsMobileUser.deleteMobileUser(req.params['username']).then(function(response,err) {
@@ -78,7 +78,7 @@ router.delete('/delete/:username', utils.isLoggedIn, function(req,res) {
 });
 
 
-router.get('/update/:username', utils.isLoggedIn, function(req, res) {
+router.get('/update/:userName', utils.isLoggedIn, function(req, res) {
     utilsMobileUser.getMobileUser(req.params['username']).then(function(response,err) {
         try{
             if(response.status == "success") {
@@ -100,9 +100,9 @@ router.get('/update/:username', utils.isLoggedIn, function(req, res) {
         }
     });
 });
+ 
 
-
-router.post('/update/:username', utils.isLoggedIn, function(req,res) {
+router.post('/update/:userName', utils.isLoggedIn, function(req,res) {
     console.log("inside update post route");
     console.log("username = ",req.params.username);
     console.log("req body = ", req.body);
@@ -137,7 +137,7 @@ router.post('/update/:username', utils.isLoggedIn, function(req,res) {
 router.post('/authenticateMobileUser', function(req, res) {
     console.log("req body authenticateMobileUser= ", req.body);
     console.log("req params authenticateMobileUser= ", req.params);
-    utilsMobileUser.authenticateMobileUser(req.body['username'],
+    utilsMobileUser.authenticateMobileUser(req.body['userName'],
                                     req.body['password']).then(function(response, err) {
 
 

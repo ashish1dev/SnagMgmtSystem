@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 
 var QrCodeSchema = mongoose.Schema({
-	machineid : String,
-	qrcode : { 
+	machineID : String,
+	qrCode : { 
         data: Buffer, 
         contentType: String 
       },

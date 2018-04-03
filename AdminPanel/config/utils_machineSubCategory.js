@@ -4,9 +4,9 @@ var Q = require("q");
 
 
 
-var addNewMachineSubCategory = function(machinesubcategory) {
+var addNewMachineSubCategory = function(machineSubCategory) {
 	var deferred = Q.defer();
-	MachineSubCategory.findOne({'machinesubcategory' : machinesubcategory}, function(err, machinesubcategory) {
+	MachineSubCategory.findOne({'machineSubCategory' : machineSubCategory}, function(err, machineSubCategory) {
 		// console.log(err);
 		// console.log(machinesubcategory);
 		if(err){
@@ -22,7 +22,7 @@ var addNewMachineSubCategory = function(machinesubcategory) {
 		else 
 		{	
 			var newMachineSubCategory = new MachineSubCategory();
-			newMachineSubCategory.machinesubcategory = machinesubcategory;
+			newMachineSubCategory.machineSubCategory = machineSubCategory;
 			newMachineSubCategory.save(function(err) {
 				if(err) {
 					deferred.reject(new Error(err));
@@ -43,17 +43,17 @@ var addNewMachineSubCategory = function(machinesubcategory) {
 
 var listAllMachineSubCategory = function (){
 	var  deferred = Q.defer();
-	MachineSubCategory.find({}, function(err, machinesubcategorys) {
+	MachineSubCategory.find({}, function(err, machineSubCategorys) {
 		if(err) {
 			console.log("error");
 
 			deferred.reject(new Error(err));
 		}
 
-		if(machinesubcategorys && machinesubcategorys != "undefined") {
+		if(machineSubCategorys && machineSubCategorys != "undefined") {
 			console.log("Got the Machine Sub-Category");
 			deferred.resolve({
-				'machinesubcategorys' : machinesubcategorys,
+				'machineSubCategorys' : machineSubCategorys,
 				status : 'success',
 			});
 		}
@@ -61,7 +61,7 @@ var listAllMachineSubCategory = function (){
 		{
 			console.log("Machine Sub-Category not found");
 			deferred.resolve({
-				'machinesubcategorys' : null,
+				'machineSubCategorys' : null,
 				status : 'machineSubCategoryNotFound',
 			});
 		}
@@ -71,19 +71,19 @@ var listAllMachineSubCategory = function (){
 
 var deleteMachineSubCategory = function(id){
 	var deferred = Q.defer();
-	MachineSubCategory.remove({'_id' : id}, function(err, machinesubcategory) {
-		console.log("machinesubcategory = ", machinesubcategory);
+	MachineSubCategory.remove({'_id' : id}, function(err, machineSubCategory) {
+		console.log("machineSubCategory = ", machineSubCategory);
 		if(err){
 			console.log("error = ", err);
 			deferred.reject(new Error(err));
 		}
-		if(machinesubcategory && machinesubcategory.result.n >= 1) {
+		if(machineSubCategory && machineSubCategory.result.n >= 1) {
 			console.log("Deleted Machine Sub-Category = ",machinesubcategory.result);
 			deferred.resolve({
 				'status': 'success',
 			});
 		}
-		else if(machinesubcategory && machinesubcategory.result.n == 0)
+		else if(machineSubCategory && machineSubCategory.result.n == 0)
 		{
 			console.log("Machine Sub-Category not found");
 			deferred.resolve({

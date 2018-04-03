@@ -3,10 +3,10 @@ var Parts = require('../models/parts');
 var Q = require("q");
 
 
-var addNewParts = function(partname) {
+var addNewParts = function(partName) {
 		var deferred = Q.defer();
 		var newParts = new Parts();
-			newParts.partname = partname;
+			newParts.partName = partName;
 			newParts.save(function(err) {
 			if(err) {
 				console.log("error is here!");

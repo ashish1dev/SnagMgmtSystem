@@ -4,12 +4,12 @@ var bcrypt   = require('bcrypt-nodejs');
 
 // define the schema for our user model
 var mobileUserSchema = mongoose.Schema({
-      firstname : String,
-      lastname  : String,
-      username    : String,
-      usertype : String,
+      firstName : String,
+      lastName  : String,
+      userName    : String,
+      userType : String,
       password    : String,
-      profilepicture : { 
+      profilePicture : { 
         data: Buffer, 
         contentType: String 
       },

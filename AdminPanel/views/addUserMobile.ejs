@@ -21,19 +21,19 @@
           <div class="form-group">
             <div class="form-row">
               <div class="col-md-6">
-                <label for="exampleInputName">First name</label>
-                <input class="form-control" id="firstname" name="firstname" type="text" aria-describedby="nameHelp" placeholder="Enter first name" maxlength="20" required>
+                <label for="exampleInputName">First Name</label>
+                <input class="form-control" id="firstName" name="firstName" type="text" aria-describedby="nameHelp" placeholder="Enter first Name" maxlength="20" required>
               </div>
               <div class="col-md-6">
-                <label for="exampleInputLastName">Last name</label>
-                <input class="form-control" id="lastname" name="lastname" type="text" aria-describedby="nameHelp" placeholder="Enter last name" maxlength="20" required>
+                <label for="exampleInputLastName">Last Name</label>
+                <input class="form-control" id="lastName" name="lastName" type="text" aria-describedby="nameHelp" placeholder="Enter last Name" maxlength="20" required>
               </div>
             </div>
           </div>
           <div class="form-group">
             <div class="form-row">
               <label for="exampleInputUserType">User Type</label>
-              <select name="usertype" id="usertype" class="form-control">
+              <select name="userType" id="userType" class="form-control">
                 <option value="inspector 1">Inspector 1</option>
                 <option value="function operator">Function Operator</option>
                 <option value="inspector 2">Inspector 2</option>
@@ -42,8 +42,8 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="exampleInputUsername">Username</label>
-            <input class="form-control" id="username" name="username" type="text" aria-describedby="UsernameHelp" readonly="readonly" required>
+            <label for="exampleInputUserName">UserName</label>
+            <input class="form-control" id="userName" name="userName" type="text" aria-describedby="UserNameHelp" readonly="readonly" required>
           </div>
           <div class="form-group">
             <div class="form-row">
@@ -60,24 +60,24 @@
 <% } %>
 
 <script>
-function createUsername()  {
-  var firstname = $('#addUserMobileForm input[name=firstname]').val().substring(0,1).toLowerCase();
-  var lastname = $('#addUserMobileForm input[name=lastname]').val().substring(0,1).toLowerCase();
+function createUserName()  {
+  var firstName = $('#addUserMobileForm input[name=firstName]').val().substring(0,1).toLowerCase();
+  var lastName = $('#addUserMobileForm input[name=lastName]').val().substring(0,1).toLowerCase();
   var chars = "0123456789";
   var string_length = 4;
-  var randomstring = '';
+  var randomString = '';
   for (var i=0; i<string_length; i++) {
     var rnum = Math.floor(Math.random() * chars.length);
-    randomstring += chars.substring(rnum,rnum+1);
+    randomString += chars.substring(rnum,rnum+1);
   }
-  var username = firstname + lastname + randomstring;
-  $('#addUserMobileForm input[name=username]').val(username);
+  var userName = firstName + lastName + randomString;
+  $('#addUserMobileForm input[name=userName]').val(userName);
 
   generatePassword();
 }
 
-$('#addUserMobileForm input[name=firstname]').on('keyup', createUsername);
-$('#addUserMobileForm input[name=lastname]').on('keyup', createUsername);
+$('#addUserMobileForm input[name=firstName]').on('keyup', createUserName);
+$('#addUserMobileForm input[name=lastName]').on('keyup', createUserName);
 
 
 function generatePassword() {

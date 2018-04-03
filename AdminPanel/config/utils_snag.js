@@ -2,29 +2,34 @@ var User = require('../models/user');
 var Snag = require('../models/snag');
 var Q = require("q");
 
-var addNewSnag = function(machineid, category, subcategory, partname, description, inspector1, 
-	functionaloperator, inspector2, inspector3, currentstatus) {
+var addNewSnag = function(machineID, category, subCategory, partName, description, inspector1UserName, 
+	functionalOperatorUserName, inspector2UserName, inspector3UserName, currentStatusOfSnag) {
 		var deferred = Q.defer();
 		var newSnag = new Snag();
-			newSnag.machineid = machineid;
+			newSnag.machineID = machineID;
 			newSnag.category = category;
-			newSnag.subcategory = subcategory;
-			newSnag.partname = partname;
+			newSnag.subCategory = subCategory;
+			newSnag.partName = partName;
 			newSnag.description = description;
-			newSnag.inspector1 = inspector1;
-			newSnag.functionaloperator = functionaloperator;
-			newSnag.inspector2 = inspector2;
-			newSnag.inspector3 = inspector3;
-			newSnag.currentstatus = currentstatus;
-			newSnag.save(function(err) {
+			newSnag.inspector1UserName = inspector1UserName;
+			newSnag.functionalOperatorUserName = functionalOperatorUserName;
+			newSnag.inspector2UserName = inspector2UserName;
+			newSnag.inspector3UserName = inspector3UserName;
+			newSnag.currentStatusOfSnag = currentStatusOfSnag;
+			console.log("new snag", newSnag);
+			newSnag.save(function(err, snag) {
+
 			if(err) {
 				console.log("error is here!");
-				deferred.reject(new Error(err));
+				deferred.resolve({
+					'status' : 'failed'
+				});
 			}
 			else{
 				console.log("success in dumping newSnag to db");
 				deferred.resolve({
-				'status' : 'success'
+					'status' : 'success',
+					'snagID' : snag.snagID
 				});
 			}	
 		});
@@ -43,9 +48,10 @@ var listAllSnag = function (){
 
 		if(snags && snags != "undefined") {
 			console.log("Got the Snags");
+			console.log("snags", snags);
 			deferred.resolve({
 				'snags' : snags,
-				status : 'success',
+				'status' : 'success',
 			});
 		}
 		else 
@@ -53,7 +59,36 @@ var listAllSnag = function (){
 			console.log("snags not found");
 			deferred.resolve({
 				'snags' : null,
-				status : 'snagsNotFound',
+				'status' : 'snagsNotFound',
+			});
+		}
+	});
+	return deferred.promise;
+}
+
+var listOfSnagBySnagType = function (currentStatusOfSnag){
+	var  deferred = Q.defer();
+	Snag.find({'currentStatusOfSnag' : currentStatusOfSnag}, function(err, snags) {
+		if(err) {
+			console.log("error");
+
+			deferred.reject(new Error(err));
+		}
+
+		if(snags && snags != "undefined") {
+			console.log("Got the Snags");
+			console.log("snags", snags);
+			deferred.resolve({
+				'snags' : snags,
+				'status' : 'success',
+			});
+		}
+		else 
+		{
+			console.log("snags not found");
+			deferred.resolve({
+				'snags' : null,
+				'status' : 'snagsNotFound',
 			});
 		}
 	});
@@ -85,15 +120,15 @@ var deleteSnag = function(id){
 	return deferred.promise;
 }
 
-var updateSnag = function(id, description, inspector1, functionaloperator, inspector2, inspector3, currentstatus) {
+var updateSnag = function(id, description, inspector1UserName, functionalOperatorUserName, inspector2UserName, inspector3UserName, currentStatusOfSnag) {
 	var deferred = Q.defer();
 	Snag.findOneAndUpdate({'_id': id}, 
 								{"$set" : {'description' : description, 
-										  'inspector1' : inspector1,
-										  'functionaloperator' : functionaloperator, 
-										  'inspector2' : inspector2,
-										  'inspector3' : inspector3,
-										  'currentstatus' : currentstatus}},
+										  'inspector1UserName' : inspector1UserName,
+										  'functionalOperatorUserName' : functionalOperatorUserName, 
+										  'inspector2UserName' : inspector2UserName,
+										  'inspector3UserName' : inspector3UserName,
+										  'currentStatusOfSnag' : currentStatusOfSnag}},
 								{new : true}, function(err, snag){
 		if (err) {
 	      deferred.reject(new Error(err));
@@ -142,5 +177,6 @@ module.exports = {addNewSnag : addNewSnag,
 			  	  listAllSnag : listAllSnag,
 			  	  deleteSnag : deleteSnag,
 			  	  updateSnag : updateSnag,
-			  	  getSnag : getSnag
+			  	  getSnag : getSnag,
+			  	  listOfSnagBySnagType : listOfSnagBySnagType
 			  	};

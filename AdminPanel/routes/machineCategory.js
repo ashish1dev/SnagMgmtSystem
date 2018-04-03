@@ -26,7 +26,7 @@ router.get('/list', utils.isLoggedIn, function(req, res) {
 router.post('/add', utils.isLoggedIn, function(req, res) {
     // save machine category in database
     console.log(req.body);
-    utilsMachineCategory.addNewMachineCategory(req.body['machinecategory']).then(function(response,err) {
+    utilsMachineCategory.addNewMachineCategory(req.body['machineCategory']).then(function(response,err) {
             try{
             	console.log("error = ", err);
             	console.log("response = ", response);

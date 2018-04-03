@@ -26,7 +26,7 @@ router.get('/list', utils.isLoggedIn, function(req, res) {
 router.post('/add', utils.isLoggedIn, function(req, res) {
     // save parts in database
     console.log(req.body);
-    utilsParts.addNewParts(req.body['partname']).then(function(response,err) {
+    utilsParts.addNewParts(req.body['partName']).then(function(response,err) {
             try{
             	console.log("error = ", err);
             	console.log("response = ", response);

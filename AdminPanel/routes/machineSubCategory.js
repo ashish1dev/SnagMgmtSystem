@@ -26,7 +26,7 @@ router.get('/list', utils.isLoggedIn, function(req, res) {
 router.post('/add', utils.isLoggedIn, function(req, res) {
     // save user in database
     console.log(req.body);
-    utilsMachineSubCategory.addNewMachineSubCategory(req.body['machinesubcategory']).then(function(response,err) {
+    utilsMachineSubCategory.addNewMachineSubCategory(req.body['machineSubCategory']).then(function(response,err) {
             try{
             	console.log("error = ", err);
             	console.log("response = ", response);

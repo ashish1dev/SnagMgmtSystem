@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -68,6 +69,7 @@ public class ScanBtnActivity extends Activity {
             String result = data.getStringExtra("com.ectolus.qrcodescanner.got_qr_scan_relult");
             Intent intent = new Intent(getApplication(), AddSnagActivity.class);
             intent.putExtra("machineID", result);
+            Log.d("machineID in scanbtn", result);
             startActivity(intent);
 //            AlertDialog alertDialog = new AlertDialog.Builder(ScanBtnActivity.this).create();
 //            alertDialog.setTitle("Scan result");
