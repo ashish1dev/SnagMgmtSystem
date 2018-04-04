@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ectolus.SnagMgmtSystem.SnagDetails">
+    tools:context="com.ectolus.SnagMgmtSystem.SnagDetailsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,97 +20,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/ScrollView01"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none" >
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/text_view_snagID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Snag ID"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"/>
-        <EditText
-            android:id="@+id/edittext_snagID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/text_view_snagID"
-            android:layout_alignParentTop="true"/>
-        <TextView
-            android:id="@+id/text_view_MachineID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Machine ID"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/text_view_snagID"/>
-        <EditText
-            android:id="@+id/edittext_MachineID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/text_view_MachineID"
-            android:layout_below="@id/edittext_snagID"/>
-        <TextView
-            android:id="@+id/text_view_Category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Category"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/text_view_MachineID"/>
-        <EditText
-            android:id="@+id/edittext_Category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/text_view_Category"
-            android:layout_below="@id/edittext_MachineID"/>
-        <TextView
-            android:id="@+id/text_view_SubCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sub Cateogry"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/text_view_Category"/>
-        <EditText
-            android:id="@+id/edittext_SubCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/text_view_SubCategory"
-            android:layout_below="@id/edittext_Category"/>
-        <TextView
-            android:id="@+id/text_view_PartName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Part Name"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/text_view_SubCategory"/>
-        <EditText
-            android:id="@+id/edittext_PartName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/text_view_PartName"
-            android:layout_below="@id/edittext_SubCategory"/>
-        <TextView
-            android:id="@+id/text_view_Description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Description"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/text_view_PartName"/>
-        <EditText
-            android:id="@+id/edittext_Description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/text_view_Description"
-            android:layout_below="@id/edittext_PartName"/>
-    </RelativeLayout>
-    </ScrollView>
+    <include layout="@layout/content_snag_details" />
 
 
 </android.support.design.widget.CoordinatorLayout>

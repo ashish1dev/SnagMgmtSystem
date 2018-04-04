@@ -22,7 +22,6 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +33,7 @@ import java.util.HashMap;
 public class ListViewActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ProcessFinishInterface {
 
-    private static String url = "http://89dfe9f9.ngrok.io/snag/getSnagsBySnagType";
+    private static String url = "http://e197c729.ngrok.io/snag/getSnagsBySnagType";
     ProgressDialog progressDialog;
     private ListView lv;
     ArrayList<HashMap<String, String>> snagList;
@@ -65,7 +64,6 @@ public class ListViewActivity extends AppCompatActivity
         snagList = new ArrayList<>();
 
         lv = (ListView) findViewById(R.id.list);
-
 
         if(userType.equals("function operator")){
             snagType= "REPORTED";
@@ -207,15 +205,41 @@ public class ListViewActivity extends AppCompatActivity
                     JSONObject snagJSON = snagHM.get(position);
                     JSONArray nameArray = snagJSON.names();
                     try {
-                        Intent intent = new Intent(ListViewActivity.this, SnagDetails.class);
+                        Intent intent = new Intent(ListViewActivity.this, SnagDetailsActivity.class);
                         JSONArray valArray = snagJSON.toJSONArray(nameArray);
                         Log.d("ValArray = ",valArray.toString());
                         for (int i = 0; i < valArray.length(); i++) {
                             if (nameArray.getString(i).equals("snagID")) {
                                 String snagID = valArray.getString(i);
-                                Log.d("TAG status ", snagID);
+                                Log.d("TAG snagID = ", snagID);
                                 intent.putExtra("snagID", snagID);
                             }
+                            if (nameArray.getString(i).equals("machineID")) {
+                                String machineID = valArray.getString(i);
+                                Log.d("TAG machineID = ", machineID);
+                                intent.putExtra("machineID", machineID);
+                            }
+                            if (nameArray.getString(i).equals("description")) {
+                                String description = valArray.getString(i);
+                                Log.d("TAG description = ", description);
+                                intent.putExtra("description", description);
+                            }
+                            if (nameArray.getString(i).equals("category")) {
+                                String category = valArray.getString(i);
+                                Log.d("TAG category = ", category);
+                                intent.putExtra("category", category);
+                            }
+                            if (nameArray.getString(i).equals("subCategory")) {
+                                String subCategory = valArray.getString(i);
+                                Log.d("TAG subCategory = ", subCategory);
+                                intent.putExtra("subCategory", subCategory);
+                            }
+                            if (nameArray.getString(i).equals("partName")) {
+                                String partName = valArray.getString(i);
+                                Log.d("TAG partName = ", partName);
+                                intent.putExtra("partName", partName);
+                            }
+
                         }
                         startActivity(intent);
                     } catch (JSONException e) {

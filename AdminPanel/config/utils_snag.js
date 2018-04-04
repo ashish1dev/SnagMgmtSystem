@@ -173,10 +173,35 @@ var getSnag = function(id) {
 	return deferred.promise;
 }
 
+var updateCurrentStatus = function(snagID, functionalOperatorUserName, currentStatusOfSnag) {
+	var deferred = Q.defer();
+	Snag.findOneAndUpdate({'snagID' : snagID},
+							{"$set" : {'functionalOperatorUserName' : functionalOperatorUserName,
+									 'currentStatusOfSnag' : currentStatusOfSnag}}, function(err, snag){
+		if (err) {
+	      deferred.reject(new Error(err));
+	    }
+	    if(snag){
+	    	deferred.resolve({
+	    		'snag' : snag,
+	    		'status' : 'success',
+	    	});
+	    }
+	    else{
+	    	deferred.resolve({
+	    		'snag' : null,
+	    		'status' : 'noSnagFound',
+	    	});
+	    }
+	 });
+	return deferred.promise;
+}
+
 module.exports = {addNewSnag : addNewSnag,
 			  	  listAllSnag : listAllSnag,
 			  	  deleteSnag : deleteSnag,
 			  	  updateSnag : updateSnag,
 			  	  getSnag : getSnag,
-			  	  listOfSnagBySnagType : listOfSnagBySnagType
+			  	  listOfSnagBySnagType : listOfSnagBySnagType,
+			  	  updateCurrentStatus : updateCurrentStatus
 			  	};

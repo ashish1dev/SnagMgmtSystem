@@ -23,10 +23,6 @@ router.get('/list', utils.isLoggedIn, function(req, res) {
 });
 
 router.post('/getSnagsBySnagType', function(req, res) {
-    console.log("req.body = ", req.body);
-    // res.json({
-    //             'status' : "success"
-    //         });
     utilsSnag.listOfSnagBySnagType(req.body['currentStatusOfSnag']).then(function(response) {
         console.log("response in getAllSnags = ", response);
 
@@ -159,6 +155,27 @@ router.post('/update/:id', utils.isLoggedIn, function(req,res) {
             console.log(err);
         }
     });
+});
+
+router.post('/updateCurrentStatus', function(req, res) {
+    utilsSnag.updateCurrentStatus(req.body['snagID'],
+                                  req.body['functionalOperatorUserName'],
+                                  req.body['currentStatusOfSnag']).then(function(response,err) {
+                                    console.log("error = ", err);
+                                    console.log("response = ", response);
+                                    if(response.status == "success") {
+                                        res.json({
+                                            response : response,
+                                            status : 'success',
+                                        });
+                                    }
+                                    else if(response.status == "noSnagFound") {
+                                        res.json({
+                                            response : response,
+                                            status : 'noSnagFound'
+                                        });
+                                    }
+                                  });
 });
 
 module.exports = router;

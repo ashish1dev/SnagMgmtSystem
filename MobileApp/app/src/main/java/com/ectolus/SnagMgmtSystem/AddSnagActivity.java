@@ -23,7 +23,7 @@ import org.json.JSONObject;
 public class AddSnagActivity extends AppCompatActivity implements  ProcessFinishInterface{
     private static final String TAG = "AddSnagActivity";
 
-    private static String url = "http://89dfe9f9.ngrok.io/snag/add";
+    private static String url = "http://e197c729.ngrok.io/snag/add";
 
     Button btnSubmit;
     TextInputLayout machineID_layout, description_layout;
