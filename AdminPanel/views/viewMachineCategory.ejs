@@ -15,28 +15,24 @@
 	        <div class="card-body">
 	        	<div class="table-responsive">
                     <form>
-    	        		<% if (response && response.machinecategorys && response.machinecategorys.length>0) { %>
+    	        		<% if (response && response.machineCategorys && response.machineCategorys.length>0) { %>
     	            	<table class="table table-busered" id="dataTable" width="100%" cellspacing="0">
     	              		<thead>
     	                		<tr>
                                     <th></th>
     	                  			<th>Machine Category</th>
-                                    <th>Created On</th>
     	                  		</tr>
     	              		</thead>
     	              		<tbody>
-    	              			<% response.machinecategorys.forEach( function( machinecategory ){ %>
+    	              			<% response.machineCategorys.forEach( function( machineCategory ){ %>
     	              			<tr>
                                     <td>
-                                        <input type="button" data-id="<%=machinecategory.id %>" data-toggle="modal" data-target="#deleteModal"  class="open-DeleteDialog btn btn-warning" value="Delete"/>
+                                        <input type="button" data-id="<%=machineCategory.id %>" data-toggle="modal" data-target="#deleteModal"  class="open-DeleteDialog btn btn-warning" value="Delete"/>
                                         &nbsp;&nbsp;&nbsp;
-                                        <!--Update function<input type="button" class="updateButton btn btn-secondary" data-id="<%=machinecategory.machinecategory %>" value="Update"> --> 
+                                        <!--Update function<input type="button" class="updateButton btn btn-secondary" data-id="<%=machineCategory.machineCategory %>" value="Update"> --> 
                                     </td>
                                     <td>
-                                        <%=machinecategory.machinecategory %>
-                                    </td>
-                                    <td>
-                                        <%= new moment(machinecategory.created).format('Do MMMM, YYYY HH:mm:ss') %>
+                                        <%=machineCategory.machineCategory %>
                                     </td>
                                 </tr>
                                 
@@ -80,8 +76,8 @@
 $(document).ready(function () {
     // Update function script
     // $(".updateButton").click(function() {
-    //     var machinecategory = $(this).data('id');
-    //     window.location.replace("/machineCategory/update/" +machinecategory);
+    //     var machineCategory = $(this).data('id');
+    //     window.location.replace("/machineCategory/update/" +machineCategory);
     // });
     
      $(".open-DeleteDialog").click(function () {

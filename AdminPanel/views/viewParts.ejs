@@ -22,8 +22,6 @@
     	              		<thead>
     	                		<tr>
                                     <th></th>
-    	                  			<th>Category of Machine</th>
-    	                  			<th>SubCateogry of Machine</th>
     	                  			<th>Part Name</th>
     	                  			<th>Created On</th>
     	                		</tr>
@@ -35,14 +33,7 @@
                                         <input type="button" data-id="<%=parts.id %>" data-toggle="modal" data-target="#deleteModal"  class="open-DeleteDialog btn btn-warning" value="Delete"/>
                                     </td>
                                     <td>
-                                        <%=parts.category %>
-                                    </td>
-                                       
-                                    <td>
-                                        <%=parts.subcategory %>
-                                    </td>
-                                    <td>
-                                        <%=parts.partname %>
+                                        <%=parts.partName %>
                                     </td>
 
                                     <td>

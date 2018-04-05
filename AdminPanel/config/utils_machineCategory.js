@@ -3,18 +3,17 @@ var MachineCategory = require('../models/machineCategory');
 var Q = require("q");
 
 
-
 var addNewMachineCategory = function(machineCategory) {
 	var deferred = Q.defer();
-	MachineCategory.findOne({'machineCategory' : machineCategory}, function(err, machineCategory) {
+	MachineCategory.findOne({'machineCategory' : machineCategory}, function(err, categoryResponse) {
 		// console.log(err);
 		// console.log(machinecategory);
 		if(err){
 			console.log("error = ", err);
 			deferred.reject(new Error(err));
 		}
-		if(machinecategory) {
-			console.log("machine category already exist = ", machinecategory);
+		if(categoryResponse) {
+			console.log("machine category already exist = ", machineCategory);
 			deferred.resolve({
 				'status': 'machineCategoryAlreadyExist'
 			});
@@ -22,7 +21,7 @@ var addNewMachineCategory = function(machineCategory) {
 		else 
 		{	
 			var newMachineCategory = new MachineCategory();
-			newMachineCategory.machinecategory = machinecategory;
+			newMachineCategory.machineCategory = machineCategory;
 			newMachineCategory.save(function(err) {
 				if(err) {
 					deferred.reject(new Error(err));
@@ -50,7 +49,7 @@ var listAllMachineCategory = function (){
 			deferred.reject(new Error(err));
 		}
 
-		if(machinecategorys && machinecategorys != "undefined") {
+		if(machineCategorys && machineCategorys != "undefined") {
 			console.log("Got the Machine Category");
 			deferred.resolve({
 				'machineCategorys' : machineCategorys,
@@ -72,7 +71,6 @@ var listAllMachineCategory = function (){
 var deleteMachineCategory = function(id){
 	var deferred = Q.defer();
 	MachineCategory.remove({'_id' : id}, function(err, machineCategory) {
-		console.log("machinecategory = ", machinecategory);
 		if(err){
 			console.log("error = ", err);
 			deferred.reject(new Error(err));

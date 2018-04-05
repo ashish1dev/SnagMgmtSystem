@@ -173,11 +173,22 @@ var getSnag = function(id) {
 	return deferred.promise;
 }
 
-var updateCurrentStatus = function(snagID, functionalOperatorUserName, currentStatusOfSnag) {
+var updateCurrentStatus = function(snagID, userName, userType, currentStatusOfSnag) {
 	var deferred = Q.defer();
+	var setString = {};
+	setString.currentStatusOfSnag = currentStatusOfSnag;
+	if(userType == "FUNCTIONAL_OPERATOR"){
+		setString.functionalOperatorUserName = userName;
+	}
+	if(userType == "INSPECTOR2"){
+		setString.inspector2UserName = userName;
+	}
+	if(userType == "INSPECTOR3"){
+		setString.inspector3UserName = userName;
+	}
+	console.log("setString = ",setString);
 	Snag.findOneAndUpdate({'snagID' : snagID},
-							{"$set" : {'functionalOperatorUserName' : functionalOperatorUserName,
-									 'currentStatusOfSnag' : currentStatusOfSnag}}, function(err, snag){
+							{"$set" : setString}, function(err, snag){
 		if (err) {
 	      deferred.reject(new Error(err));
 	    }

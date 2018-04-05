@@ -2,13 +2,7 @@
 var mongoose = require('mongoose');
 
 var partsSchema = mongoose.Schema( {
-	category : String,
-	subCategory : String,
-	partName : String,
-	created: {
-        type: Date,
-        default: Date.now
-     },
+	partName : String
 });
 
 

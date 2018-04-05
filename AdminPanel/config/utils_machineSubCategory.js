@@ -6,15 +6,16 @@ var Q = require("q");
 
 var addNewMachineSubCategory = function(machineSubCategory) {
 	var deferred = Q.defer();
-	MachineSubCategory.findOne({'machineSubCategory' : machineSubCategory}, function(err, machineSubCategory) {
+	console.log("machine sub category = ",machineSubCategory);
+	MachineSubCategory.findOne({'machineSubCategory' : machineSubCategory}, function(err, subCategoryResponse) {
 		// console.log(err);
-		// console.log(machinesubcategory);
+		 console.log("inside method = ",machineSubCategory);
 		if(err){
 			console.log("error = ", err);
 			deferred.reject(new Error(err));
 		}
-		if(machinesubcategory) {
-			console.log("machine sub category already exist = ", machinesubcategory);
+		if(subCategoryResponse) {
+			console.log("machine sub category already exist = ", machineSubCategory);
 			deferred.resolve({
 				'status': 'machineSubCategoryAlreadyExist'
 			});
@@ -23,14 +24,15 @@ var addNewMachineSubCategory = function(machineSubCategory) {
 		{	
 			var newMachineSubCategory = new MachineSubCategory();
 			newMachineSubCategory.machineSubCategory = machineSubCategory;
-			newMachineSubCategory.save(function(err) {
+			newMachineSubCategory.save(function(err, subCategory) {
 				if(err) {
 					deferred.reject(new Error(err));
 				}
 				else{
 					console.log("success in dumping newMachineSubCategory to db");
 					deferred.resolve({
-						'status' : 'success'
+						'status' : 'success',
+						'subCategory' : subCategory
 					});
 				}	
 		    });
@@ -78,7 +80,7 @@ var deleteMachineSubCategory = function(id){
 			deferred.reject(new Error(err));
 		}
 		if(machineSubCategory && machineSubCategory.result.n >= 1) {
-			console.log("Deleted Machine Sub-Category = ",machinesubcategory.result);
+			console.log("Deleted Machine Sub-Category = ",machineSubCategory.result);
 			deferred.resolve({
 				'status': 'success',
 			});

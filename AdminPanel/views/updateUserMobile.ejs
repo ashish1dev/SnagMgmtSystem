@@ -8,7 +8,7 @@
       <div class="card-header">Update the Mobile User Account</div>
       <div class="card-body">
         
-        <form name="updateUserMobileForm" action="/userMobile/update/<%= response.user.username %>" method="post" id="updateUserMobileForm" onSubmit="return true;">
+        <form name="updateUserMobileForm" action="/userMobile/update/<%= response.user.userName %>" method="post" id="updateUserMobileForm" onSubmit="return true;">
 
           <div class="form-group">
             <div class="form-row">
@@ -25,28 +25,28 @@
             <div class="form-row">
               <div class="col-md-6">
                 <label for="exampleInputName">First name</label>
-                <input class="form-control" id="firstname" name="firstname" type="text" aria-describedby="nameHelp" placeholder="Enter first name" value="<%=response.user.firstname %>" required maxlength="20">
+                <input class="form-control" id="firstName" name="firstName" type="text" aria-describedby="nameHelp" placeholder="Enter first name" value="<%=response.user.firstName %>" required maxlength="20">
               </div>
               <div class="col-md-6">
                 <label for="exampleInputLastName">Last name</label>
-                <input class="form-control" id="lastname" name="lastname" type="text" aria-describedby="nameHelp" placeholder="Enter last name" value="<%= response.user.lastname %>" required maxlength="20">
+                <input class="form-control" id="lastName" name="lastName" type="text" aria-describedby="nameHelp" placeholder="Enter last name" value="<%= response.user.lastName %>" required maxlength="20">
               </div>
             </div>
           </div>
           <div class="form-group">
             <div class="form-row">
               <label for="exampleInputUserType">User Type</label>
-              <select name="usertype" id="usertype" value="<%=response.user.usertype %>" class="form-control">
-                <option class="inspector 1" value="inspector 1">Inspector 1</option>
-                <option class="function operator" value="function operator">Function Operator</option>
-                <option class="inspector 2" value="inspector 2">Inspector 2</option>
-                <option class="inspector 3" value="inspector 3">Inspector 3</option>
+              <select name="userType" id="userType" value="<%=response.user.userType %>" class="form-control">
+                <option class="inspector 1" value="INSPECTOR1">INSPECTOR1</option>
+                <option class="function operator" value="FUNCTIONAL_OPERATOR">FUNCTIONAL_OPERATOR</option>
+                <option class="inspector 2" value="INSPECTOR2">INSPECTOR2</option>
+                <option class="inspector 3" value="INSPECTOR3">INSPECTOR3</option>
               </select>
             </div>
           </div>
           <div class="form-group">
-            <label for="exampleInputUsername">Username</label>
-            <input class="form-control" id="username" name="username" type="text" aria-describedby="UsernameHelp" readonly="readonly" value="<%= response.user.username %>" disabled>
+            <label for="exampleInputUsername">UserName</label>
+            <input class="form-control" id="userName" name="userName" type="text" aria-describedby="UsernameHelp" readonly="readonly" value="<%= response.user.userName %>" disabled>
           </div>
           <div class="form-group">
             <div class="form-row">

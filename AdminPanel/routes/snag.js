@@ -159,10 +159,9 @@ router.post('/update/:id', utils.isLoggedIn, function(req,res) {
 
 router.post('/updateCurrentStatus', function(req, res) {
     utilsSnag.updateCurrentStatus(req.body['snagID'],
-                                  req.body['functionalOperatorUserName'],
+                                  req.body['userName'],
+                                  req.body['userType'],
                                   req.body['currentStatusOfSnag']).then(function(response,err) {
-                                    console.log("error = ", err);
-                                    console.log("response = ", response);
                                     if(response.status == "success") {
                                         res.json({
                                             response : response,

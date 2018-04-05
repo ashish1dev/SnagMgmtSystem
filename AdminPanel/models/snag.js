@@ -7,9 +7,9 @@ var autoIncrement = require('mongoose-auto-increment');
 var snagSchema = mongoose.Schema({
       snagID : String,
       machineID : String,
-      category : String,
-      subCategory : String,
-      partName : String,
+      categoryID : String,
+      subCategoryID : String,
+      partNameID : String,
       description : String,
       inspector1UserName : String,
       functionalOperatorUserName : String,

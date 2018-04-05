@@ -24,18 +24,18 @@
           <div class="form-group">
             <div class="form-row">
                 <label for="exampleInputMachineId">Machine Id</label>
-                <input class="form-control" id="machineid" name="machineid" type="text" aria-describedby="machineidHelp" placeholder="Enter Machine Id" value="<%=response.machine.machineid %>" disabled>
+                <input class="form-control" id="machineID" name="machineID" type="text" aria-describedby="machineidHelp" placeholder="Enter Machine Id" value="<%=response.machine.machineid %>" disabled>
             </div>
           </div>
           <div class="form-group">
             <div class="form-row">
               <label for="exampleQRCode">QR Code</label>
-                <input class="form-control" id="qrcode" name="qrcode" type="text" aria-describedby="nameHelp" value="<%=response.machine.qrcode %>" disabled>
+                <input class="form-control" id="QrCode" name="QrCode" type="text" aria-describedby="nameHelp" value="<%=response.machine.qrcode %>" disabled>
             </div>
           </div>
           <div class="form-group">
             <label for="exampleInputModelName">Model name</label>
-            <input class="form-control" id="modelname" name="modelname" type="text" aria-describedby="ModelNameHelp" value="<%= response.machine.modelname %>" maxlength="30" required>
+            <input class="form-control" id="modelName" name="modelName" type="text" aria-describedby="ModelNameHelp" value="<%= response.machine.modelname %>" maxlength="30" required>
           </div>
           <button class="btn btn-primary btn-block" type="Submit">Update</button>
         </form>

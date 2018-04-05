@@ -4,12 +4,8 @@ var bcrypt   = require('bcrypt-nodejs');
 
 // define the schema for our user model
 var  machineSubCategorySchema = mongoose.Schema({
-      machineSubCategory : String,
-      created: {
-        type: Date,
-        default: Date.now
-      },
-
+      machineSubCategory : String
+      
 });
 
 // create the model for users and expose it to our app

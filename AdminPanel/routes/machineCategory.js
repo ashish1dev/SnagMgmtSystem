@@ -17,7 +17,6 @@ router.get('/list', utils.isLoggedIn, function(req, res) {
             user: req.user,
             title: '',
             response: response,
-            moment: moment,
         });
     });
 });

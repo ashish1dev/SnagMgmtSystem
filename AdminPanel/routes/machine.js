@@ -37,7 +37,8 @@ router.post('/add', function(req, res) {
                         try{
                             if(responseQr.status == "success") {
                                 utilsQrCode.dumpQrCode(response.machineID, responseQr.imagePath, 'image/svg');
-                                res.send({
+                                res.render('addMachine', {
+                                    user : req.user,
                                     status : 'success',
                                     path : responseQr.imagePath
                                 });
@@ -46,12 +47,6 @@ router.post('/add', function(req, res) {
                                 console.log(err);
                         }
                     });
-    			}
-    			if (response.status == "machineAlreadyExist") {
-                	res.render('addMachine', {
-    		            user: req.user,
-    		            status: 'machineAlreadyExist',
-            		});
     			}
             } catch(err) {
                 console.log(err);

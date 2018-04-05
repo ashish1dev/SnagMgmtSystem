@@ -9,6 +9,7 @@ var machineSchema = mongoose.Schema({
         data: Buffer, 
         contentType: String 
       },
+      qrCodeImageName : String,
       model_Name : String,
       created: {
         type: Date,

@@ -18,7 +18,7 @@ var addNewMachine = function(model_Name) {
 			console.log("success in dumping newMachine to db");
 			deferred.resolve({
 			'status' : 'success',
-			'machineID' : machine.machineid
+			'machineID' : machine.machineID
 			});
 		}	
 	});

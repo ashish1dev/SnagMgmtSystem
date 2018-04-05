@@ -79,7 +79,7 @@ router.delete('/delete/:userName', utils.isLoggedIn, function(req,res) {
 
 
 router.get('/update/:userName', utils.isLoggedIn, function(req, res) {
-    utilsMobileUser.getMobileUser(req.params['username']).then(function(response,err) {
+    utilsMobileUser.getMobileUser(req.params['userName']).then(function(response,err) {
         try{
             if(response.status == "success") {
                 res.render('updateUserMobile', {
@@ -104,12 +104,12 @@ router.get('/update/:userName', utils.isLoggedIn, function(req, res) {
 
 router.post('/update/:userName', utils.isLoggedIn, function(req,res) {
     console.log("inside update post route");
-    console.log("username = ",req.params.username);
+    console.log("username = ",req.params.userName);
     console.log("req body = ", req.body);
-    utilsMobileUser.updateMobileUser(req.body['firstname'],
-                           req.body['lastname'],
-                           req.params['username'],
-                           req.body['usertype'],
+    utilsMobileUser.updateMobileUser(req.body['firstName'],
+                           req.body['lastName'],
+                           req.params['userName'],
+                           req.body['userType'],
                            req.body['password'],).then(function(response,err) {
         try{
             console.log("error = ", err);
