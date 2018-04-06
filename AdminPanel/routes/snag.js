@@ -177,4 +177,16 @@ router.post('/updateCurrentStatus', function(req, res) {
                                   });
 });
 
+
+router.get('/listAllCategorySubCategoryParts', function(req, res) {
+    utilsSnag.getAllCategorySubCategoryParts().then(function(response) {
+        console.log("response = ",response);
+        res.json({
+            'status' : response.status,
+            'result' : response.result,
+        });
+    });
+});
+
+
 module.exports = router;

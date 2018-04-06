@@ -47,8 +47,9 @@ public class ChangeStatusAsyncTask  extends AsyncTask<String, Void, JSONObject> 
 
         Log.i("TAG in currentstatus", params[0] + "-" + params[1] + "-" + params[2] + "-" + params[3]);
         nameValuePair.add(new BasicNameValuePair("snagID", params[1]));
-        nameValuePair.add(new BasicNameValuePair("functionalOperatorUserName", params[2]));
-        nameValuePair.add(new BasicNameValuePair("currentStatusOfSnag", params[3]));
+        nameValuePair.add(new BasicNameValuePair("userName", params[2]));
+        nameValuePair.add(new BasicNameValuePair("userType", params[3]));
+        nameValuePair.add(new BasicNameValuePair("currentStatusOfSnag", params[4]));
         JSONObject json = null;
         try {
             post.setEntity(new UrlEncodedFormEntity(nameValuePair, "UTF-8"));

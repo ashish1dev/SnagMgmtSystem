@@ -56,7 +56,7 @@ public class SnagAsyncHttpPost extends AsyncTask<String, Void, JSONObject>{
     protected JSONObject doInBackground(String... params) {
         HttpClient client = new DefaultHttpClient();
 
-        HttpPost post = new HttpPost(params[0]);// in
+        HttpPost post = new HttpPost(params[0]);
 
         ArrayList<NameValuePair> nameValuePair = new ArrayList<NameValuePair>();
 

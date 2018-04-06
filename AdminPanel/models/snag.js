@@ -2,14 +2,13 @@
 var mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
 
-
 // define the schema for our snag model
 var snagSchema = mongoose.Schema({
       snagID : String,
       machineID : String,
-      categoryID : String,
-      subCategoryID : String,
-      partNameID : String,
+      category : String,
+      subCategory : String,
+      partName : String,
       description : String,
       inspector1UserName : String,
       functionalOperatorUserName : String,

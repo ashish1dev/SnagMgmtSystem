@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity implements ProcessFinishInt
 
     ProgressDialog progressDialog;
 
-    private static String url = "http://e197c729.ngrok.io/usermobile/authenticateMobileUser";
+    private static String url = "http://ae55f07b.ngrok.io/userMobile/authenticateMobileUser";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,11 +129,11 @@ public class LoginActivity extends AppCompatActivity implements ProcessFinishInt
         progressDialog.show();
 
 
-        String username = _UsernameText.getText().toString();
+        String userName = _UsernameText.getText().toString();
         String password = _passwordText.getText().toString();
 
 
-        new LoginAsyncHttpPost(this).execute(new String[]{url, username, password});
+        new LoginAsyncHttpPost(this).execute(new String[]{url, userName, password});
 //        new android.os.Handler().postDelayed(
 //                new Runnable() {
 //                    public void run() {

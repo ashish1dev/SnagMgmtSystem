@@ -6,12 +6,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.http.RequestQueue;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -20,15 +23,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class AddSnagActivity extends AppCompatActivity implements  ProcessFinishInterface{
+import java.util.ArrayList;
+
+public class AddSnagActivity extends AppCompatActivity implements  ProcessFinishInterface, SpinnerAsyncTask.AsyncResult {
     private static final String TAG = "AddSnagActivity";
 
-    private static String url = "http://e197c729.ngrok.io/snag/add";
+    private static String url = "http://ae55f07b.ngrok.io/snag/add";
+    private static String url_Parts = "http://ae55f07b.ngrok.io/snag/listAllCategorySubCategoryParts";
 
     Button btnSubmit;
     TextInputLayout machineID_layout, description_layout;
-    Spinner categorySpinner, subcategorySpinner, partnameSpinner;
-    EditText machineID_ET,descriptionET;
+    Spinner categorySpinner, subcategorySpinner, partsSpinner;
+    EditText machineID_ET, descriptionET;
     ProgressDialog progressDialog;
     String currentStatusOfSnag, inspector1UserName;
     private Context thisActivityContext;
@@ -50,12 +56,15 @@ public class AddSnagActivity extends AppCompatActivity implements  ProcessFinish
         description_layout.setCounterMaxLength(120);
         description_layout.setCounterEnabled(true);
         descriptionET = (EditText) findViewById(R.id.description);
-        categorySpinner = (Spinner) findViewById(R.id.category);
-        subcategorySpinner = (Spinner) findViewById(R.id.subCategory);
-        partnameSpinner = (Spinner) findViewById(R.id.partname);
+        categorySpinner = (Spinner) findViewById(R.id.spinner_Category);
+        subcategorySpinner = (Spinner) findViewById(R.id.spinner_subCategory);
+        partsSpinner = (Spinner) findViewById(R.id.spinner_Parts);
         SharedPreferences mPrefs = getSharedPreferences("USER_PREFERENCES", Context.MODE_PRIVATE);
         inspector1UserName = mPrefs.getString("userName", null);
         currentStatusOfSnag = "REPORTED";
+
+        new SpinnerAsyncTask(this).execute(new String[]{url_Parts});
+
         btnSubmit = (Button) findViewById(R.id.btn_submit);
 
         thisActivityContext = getApplicationContext();
@@ -63,13 +72,13 @@ public class AddSnagActivity extends AppCompatActivity implements  ProcessFinish
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               submitForm();
+                submitForm();
             }
         });
     }
 
-    public void submitForm(){
-        new SnagAsyncHttpPost(this).execute(new String[]{url, machineID_ET.getText().toString(), categorySpinner.getSelectedItem().toString(), subcategorySpinner.getSelectedItem().toString(), partnameSpinner.getSelectedItem().toString(), descriptionET.getText().toString(), inspector1UserName, currentStatusOfSnag});
+    public void submitForm() {
+        new SnagAsyncHttpPost(this).execute(new String[]{url, machineID_ET.getText().toString(), categorySpinner.getSelectedItem().toString(), subcategorySpinner.getSelectedItem().toString(), partsSpinner.getSelectedItem().toString(), descriptionET.getText().toString(), inspector1UserName, currentStatusOfSnag});
         progressDialog = new ProgressDialog(AddSnagActivity.this, R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Saving...");
@@ -156,5 +165,43 @@ public class AddSnagActivity extends AppCompatActivity implements  ProcessFinish
             }
         }
         return snagID;
+    }
+
+    @Override
+    public void onProcessFinish(JSONObject output) throws JSONException {
+        getPartName(output);
+    }
+
+    public String getPartName(JSONObject st) throws JSONException {
+        String partName = null;
+        JSONArray nameArray = st.names();
+        JSONArray valArray = st.toJSONArray(nameArray);
+        for (int i = 0; i < valArray.length(); i++) {
+            if (nameArray.getString(i).equals("result")) {
+                JSONObject json2 = new JSONObject(valArray.getString(i));
+                Log.d("show json2 = ", json2.toString());
+                JSONArray nameArray2 = json2.names();
+                JSONArray valArray2 = json2.toJSONArray(nameArray2);
+                Log.d("valArray2", valArray2.toString());
+                Log.d("nameArray2", nameArray2.toString());
+                for (int j = 0; j < valArray2.length(); j++) {
+                    if (nameArray2.getString(j).equals("parts")) {
+                        for (int k = 0; k < ; k++) {
+                            JSONObject json3 = new JSONObject(valArray2.getString(k));
+                            Log.d("show json3 = ", json3.toString());
+                            JSONArray nameArray3 = json3.names();
+                            JSONArray valArray3 = json3.toJSONArray(nameArray3);
+                            for (int l = 0; l < valArray3.length(); l++) {
+                                if (nameArray2.getString(l).equals("partName")) {
+                                    partName = valArray3.getString(l);
+                                    Log.d("TAG partName = ", partName);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return partName;
     }
 }

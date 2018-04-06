@@ -1,8 +1,6 @@
 var User = require('../models/user');
 var Parts = require('../models/parts');
 var Q = require("q");
-var Category = require('../models/machineCategory');
-var SubCategory = require('../models/machineSubCategory');
 
 
 var addNewParts = function(partName) {
@@ -78,57 +76,7 @@ var deleteParts = function(id){
 	return deferred.promise;
 }
 
-var getAllCategory = function(id) {
-	var deferred = Q.defer();
-	Category.find({}, function(err, category) {
-		console.log("machine Category = ", category);
-		if(err){
-			console.log("error = ", err);
-			deferred.reject(new Error(err));
-		}
-		if(category && category != "undefined") {
-			deferred.resolve({
-				'category' : category,
-				'status': 'success',
-			});
-		}
-		else{
-			console.log("category not found");
-			deferred.resolve({
-				status : 'noCategoryFound',
-			});
-		}
-	});
-	return deferred.promise;
-}
-
-var getAllSubCategory = function(id) {
-	var deferred = Q.defer();
-	SubCategory.find({}, function(err, subCategory) {
-		console.log("machine Sub Category = ", subCategory);
-		if(err){
-			console.log("error = ", err);
-			deferred.reject(new Error(err));
-		}
-		if(subCategory && subCategory != "undefined") {
-			deferred.resolve({
-				'subCategory' : subCategory,
-				'status': 'success',
-			});
-		}
-		else{
-			console.log("subCategory not found");
-			deferred.resolve({
-				status : 'noSubCategoryFound',
-			});
-		}
-	});
-	return deferred.promise;
-}
-
 module.exports = {addNewParts : addNewParts,
 			  	  listAllParts : listAllParts,
 			  	  deleteParts : deleteParts,
-			  	  getAllCategory : getAllCategory,
-			  	  getAllSubCategory : getAllSubCategory
-			  	};
+			  	  };

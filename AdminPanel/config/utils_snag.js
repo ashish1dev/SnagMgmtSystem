@@ -1,6 +1,10 @@
 var User = require('../models/user');
 var Snag = require('../models/snag');
 var Q = require("q");
+var Category = require('../models/machineCategory');
+var SubCategory = require('../models/machineSubCategory');
+var Parts = require('../models/parts');
+
 
 var addNewSnag = function(machineID, category, subCategory, partName, description, inspector1UserName, 
 	functionalOperatorUserName, inspector2UserName, inspector3UserName, currentStatusOfSnag) {
@@ -208,11 +212,53 @@ var updateCurrentStatus = function(snagID, userName, userType, currentStatusOfSn
 	return deferred.promise;
 }
 
+var getAllCategorySubCategoryParts = function(id) {
+	var deferred = Q.defer();
+	var result = {};
+	Category.find({}, function(err, category) {
+		console.log("machine Category = ", category);
+		if(err){
+			console.log("error = ", err);
+			deferred.reject(new Error(err));
+		}
+		result.category = category;
+
+		SubCategory.find({}, function(err, subCategory) {
+		console.log("machine Sub Category = ", subCategory);
+		if(err)
+			{				
+				console.log("error = ", err);
+				deferred.reject(new Error(err));
+			}
+			result.subCategory = subCategory;
+
+			Parts.find({}, function(err, parts) {
+				console.log("Part = ", parts);
+				if(err){
+					console.log("error = ", err);
+					deferred.reject(new Error(err));
+				}
+				result.parts = parts;
+				if(result){
+					deferred.resolve({
+						'result' : result,
+						'status' : "success"
+					});
+				}
+			});
+		});
+		
+	});
+	return deferred.promise;
+}
+
+
 module.exports = {addNewSnag : addNewSnag,
 			  	  listAllSnag : listAllSnag,
 			  	  deleteSnag : deleteSnag,
 			  	  updateSnag : updateSnag,
 			  	  getSnag : getSnag,
 			  	  listOfSnagBySnagType : listOfSnagBySnagType,
-			  	  updateCurrentStatus : updateCurrentStatus
-			  	};
+			  	  updateCurrentStatus : updateCurrentStatus,
+			  	  getAllCategorySubCategoryParts : getAllCategorySubCategoryParts,
+			  	  };

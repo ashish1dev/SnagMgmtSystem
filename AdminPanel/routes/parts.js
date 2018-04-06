@@ -73,31 +73,5 @@ router.delete('/delete/:id', utils.isLoggedIn, function(req,res) {
     }); 
 });
 
-router.get('/listAllCategory', function(req, res) {
-    utilsParts.getAllCategory().then(function(response) {
-        console.log("response = ",response);
-
-        res.json({
-            user : req.user,
-            title: '',
-            'status' : response.status,
-            'category' : response.category,
-            moment: moment,
-        });
-    });
-});
-
-router.get('/listAllSubCategory', function(req, res) {
-    utilsParts.getAllSubCategory().then(function(response) {
-
-        res.json({
-            user : req.user,
-            title: '',
-            'status' : response.status,
-            'subCategory' : response.subCategory,
-            moment: moment,
-        });
-    });
-});
 
 module.exports = router;

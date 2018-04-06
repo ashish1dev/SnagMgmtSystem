@@ -22,15 +22,16 @@ import org.json.JSONObject;
 public class SnagDetailsActivity extends AppCompatActivity implements ProcessFinishInterface {
 
     EditText snagID, machineID, description, category, subCategory, partName;
-    Button accept;
+    Button btnAccept;
 
-    private static String url = "http://e197c729.ngrok.io/snag/updateCurrentStatus";
+    private static String url = "http://ae55f07b.ngrok.io/snag/updateCurrentStatus";
     String snag_id = null;
     String machine_id = null;
     String Description = null;
     String Category = null;
     String SubCategory = null;
     String PartName = null;
+    String status, userName,userType;
 
 
     @Override
@@ -66,8 +67,24 @@ public class SnagDetailsActivity extends AppCompatActivity implements ProcessFin
         partName.setText(PartName);
         partName.setEnabled(false);
 
-        accept = (Button) findViewById(R.id.btn_accept);
-        accept.setOnClickListener(new View.OnClickListener() {
+        SharedPreferences mPrefs = getSharedPreferences("USER_PREFERENCES", Context.MODE_PRIVATE);
+        userName = mPrefs.getString("userName", null);
+        userType = mPrefs.getString("userType", null);
+
+        btnAccept = (Button) findViewById(R.id.btn_accept);
+        if(userType.equals("FUNCTIONAL_OPERATOR")){
+            btnAccept.setText("RESOLVED");
+        }
+
+        if(userType.equals("INSPECTOR2")){
+            btnAccept.setText("REVIEWED");
+        }
+
+        if(userType.equals("INSPECTOR3")){
+            btnAccept.setText("CLOSED");
+        }
+
+        btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Start the qr scan activity
@@ -77,10 +94,21 @@ public class SnagDetailsActivity extends AppCompatActivity implements ProcessFin
     }
 
     public void AcceptForm() {
-        SharedPreferences mPrefs = getSharedPreferences("USER_PREFERENCES", Context.MODE_PRIVATE);
-        String functionalOperator = mPrefs.getString("userName", null);
-        String snagType = "RESOLVED";
-        new ChangeStatusAsyncTask(this).execute(new String[]{url, snag_id, functionalOperator, snagType});
+
+        if(userType.equals("FUNCTIONAL_OPERATOR")) {
+            status = "RESOLVED";
+            new ChangeStatusAsyncTask(this).execute(new String[]{url, snag_id, userName, userType, status});
+        }
+
+        if(userType.equals("INSPECTOR2")) {
+            status = "REVIEWED";
+            new ChangeStatusAsyncTask(this).execute(new String[]{url, snag_id, userName, userType, status});
+        }
+
+        if(userType.equals("INSPECTOR3")) {
+            status = "CLOSED";
+            new ChangeStatusAsyncTask(this).execute(new String[]{url, snag_id, userName, userType, status});
+        }
     }
 
     @Override

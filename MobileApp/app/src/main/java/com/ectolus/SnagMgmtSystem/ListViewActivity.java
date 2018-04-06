@@ -22,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,21 +34,25 @@ import java.util.HashMap;
 public class ListViewActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ProcessFinishInterface {
 
-    private static String url = "http://e197c729.ngrok.io/snag/getSnagsBySnagType";
+    private static String url = "http://ae55f07b.ngrok.io/snag/getSnagsBySnagType";
     ProgressDialog progressDialog;
     private ListView lv;
     ArrayList<HashMap<String, String>> snagList;
     String snagType= null;
+    TextView nav_fullName, nav_userType;
+    String userType, firstName, lastName, fullName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_listview);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         SharedPreferences mPrefs = getSharedPreferences("USER_PREFERENCES", Context.MODE_PRIVATE);
-        String userType = mPrefs.getString("userType", null);
-        String userName = mPrefs.getString("userName", null);
+        userType = mPrefs.getString("userType", null);
+        firstName = mPrefs.getString("firstName", null);
+        lastName = mPrefs.getString("lastName", null);
+        fullName = firstName + " " + " " + lastName;
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -65,17 +70,17 @@ public class ListViewActivity extends AppCompatActivity
 
         lv = (ListView) findViewById(R.id.list);
 
-        if(userType.equals("function operator")){
+        if(userType.equals("FUNCTIONAL_OPERATOR")){
             snagType= "REPORTED";
             new ListViewAsyncTask(this).execute(new String[]{url,snagType});
         }
 
-        if(userType.equals("inspector 2")){
+        if(userType.equals("INSPECTOR2")){
             snagType= "RESOLVED";
             new ListViewAsyncTask(this).execute(new String[]{url,snagType});
         }
 
-        if(userType.equals("inspector 3")){
+        if(userType.equals("INSPECTOR3")){
             snagType= "REVIEWED";
             new ListViewAsyncTask(this).execute(new String[]{url,snagType});
         }
@@ -88,10 +93,15 @@ public class ListViewActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        nav_fullName = (TextView) headerView.findViewById(R.id.textView_fullName);
+        nav_fullName.setText(fullName);
+        nav_userType = (TextView) headerView.findViewById(R.id.textView_userType);
+        nav_userType.setText(userType);
         navigationView.setNavigationItemSelectedListener(this);
 
         //progress dialog will start here
-        if(!userType.equals("inspector 1")) {
+        if(!userType.equals("INSPECTOR1")) {
             progressDialog = new ProgressDialog(ListViewActivity.this, R.style.AppTheme_Dark_Dialog);
             progressDialog.setIndeterminate(true);
             progressDialog.setMessage("Loading...");
@@ -112,7 +122,7 @@ public class ListViewActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main2, menu);
+        getMenuInflater().inflate(R.menu.listview, menu);
         return true;
     }
 
@@ -176,9 +186,9 @@ public class ListViewActivity extends AppCompatActivity
                 snagID = sn.getString("snagID");
                 description = sn.getString("description");
                 machineID = sn.getString("machineID");
-                category = sn.getString("category");
-                subCategory = sn.getString("subCategory");
-                partName = sn.getString("partName");
+                category = sn.getString("categoryID");
+                subCategory = sn.getString("subCategoryID");
+                partName = sn.getString("partNameID");
                 Log.d("sn from listview = ",sn.toString());
                 snagHM.put(i, sn);
 
@@ -224,17 +234,17 @@ public class ListViewActivity extends AppCompatActivity
                                 Log.d("TAG description = ", description);
                                 intent.putExtra("description", description);
                             }
-                            if (nameArray.getString(i).equals("category")) {
+                            if (nameArray.getString(i).equals("categoryID")) {
                                 String category = valArray.getString(i);
                                 Log.d("TAG category = ", category);
                                 intent.putExtra("category", category);
                             }
-                            if (nameArray.getString(i).equals("subCategory")) {
+                            if (nameArray.getString(i).equals("subCategoryID")) {
                                 String subCategory = valArray.getString(i);
                                 Log.d("TAG subCategory = ", subCategory);
                                 intent.putExtra("subCategory", subCategory);
                             }
-                            if (nameArray.getString(i).equals("partName")) {
+                            if (nameArray.getString(i).equals("partNameID")) {
                                 String partName = valArray.getString(i);
                                 Log.d("TAG partName = ", partName);
                                 intent.putExtra("partName", partName);
