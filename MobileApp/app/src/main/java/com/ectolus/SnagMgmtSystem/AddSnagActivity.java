@@ -24,12 +24,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AddSnagActivity extends AppCompatActivity implements  ProcessFinishInterface, SpinnerAsyncTask.AsyncResult {
     private static final String TAG = "AddSnagActivity";
 
-    private static String url = "http://ae55f07b.ngrok.io/snag/add";
-    private static String url_Parts = "http://ae55f07b.ngrok.io/snag/listAllCategorySubCategoryParts";
+    private static String url = SplashActivity.DOMAIN + "/snag/add";
+    private static String url_Parts = SplashActivity.DOMAIN + "/snag/listAllCategorySubCategoryParts";
 
     Button btnSubmit;
     TextInputLayout machineID_layout, description_layout;
@@ -169,39 +170,115 @@ public class AddSnagActivity extends AppCompatActivity implements  ProcessFinish
 
     @Override
     public void onProcessFinish(JSONObject output) throws JSONException {
-        getPartName(output);
+        String[] machineCategoryArray = getMachineCategory(output);
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, machineCategoryArray);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(categoryAdapter);
+
+        String[] machineSubCategoryArray = getMachineSubCategroy(output);
+        ArrayAdapter<String> subCategoryAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, machineSubCategoryArray);
+        subCategoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        subcategorySpinner.setAdapter(subCategoryAdapter);
+
+        String[] partNameArray = getPartName(output);
+        ArrayAdapter<String> PartsAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, partNameArray);
+        PartsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        partsSpinner.setAdapter(PartsAdapter);
     }
 
-    public String getPartName(JSONObject st) throws JSONException {
+    public String[] getPartName(JSONObject st) throws JSONException {
         String partName = null;
+        String[] partNameArray = null;
         JSONArray nameArray = st.names();
         JSONArray valArray = st.toJSONArray(nameArray);
         for (int i = 0; i < valArray.length(); i++) {
             if (nameArray.getString(i).equals("result")) {
                 JSONObject json2 = new JSONObject(valArray.getString(i));
                 Log.d("show json2 = ", json2.toString());
+
                 JSONArray nameArray2 = json2.names();
                 JSONArray valArray2 = json2.toJSONArray(nameArray2);
+
                 Log.d("valArray2", valArray2.toString());
-                Log.d("nameArray2", nameArray2.toString());
-                for (int j = 0; j < valArray2.length(); j++) {
-                    if (nameArray2.getString(j).equals("parts")) {
-                        for (int k = 0; k < ; k++) {
-                            JSONObject json3 = new JSONObject(valArray2.getString(k));
-                            Log.d("show json3 = ", json3.toString());
-                            JSONArray nameArray3 = json3.names();
-                            JSONArray valArray3 = json3.toJSONArray(nameArray3);
-                            for (int l = 0; l < valArray3.length(); l++) {
-                                if (nameArray2.getString(l).equals("partName")) {
-                                    partName = valArray3.getString(l);
-                                    Log.d("TAG partName = ", partName);
-                                }
-                            }
-                        }
-                    }
+
+                JSONArray partsArray = valArray2.getJSONArray(2);
+                partNameArray = new String[partsArray.length()];
+                for (int j = 0; j < partsArray.length(); ++j) {
+                    JSONObject parts;
+                    parts = partsArray.getJSONObject(j);
+                    partName = parts.getString("partName");
+                    Log.d("partName = ", partName);
+                    partNameArray[j] = partName;
+                    Log.d("partNameArray", "Parts " +partNameArray[j]);
                 }
+
             }
         }
-        return partName;
+        return partNameArray;
+    }
+
+    public String[] getMachineCategory(JSONObject st) throws JSONException {
+        String machineCategory = null;
+        String[] machineCategoryArray = null;
+        JSONArray nameArray = st.names();
+        JSONArray valArray = st.toJSONArray(nameArray);
+        for (int i = 0; i < valArray.length(); i++) {
+            if (nameArray.getString(i).equals("result")) {
+                JSONObject json2 = new JSONObject(valArray.getString(i));
+                Log.d("show json2 = ", json2.toString());
+
+                JSONArray nameArray2 = json2.names();
+                JSONArray valArray2 = json2.toJSONArray(nameArray2);
+
+                Log.d("valArray2", valArray2.toString());
+
+                JSONArray categoryArray = valArray2.getJSONArray(0);
+                machineCategoryArray = new String[categoryArray.length()];
+                for (int j = 0; j < categoryArray.length(); ++j) {
+                    JSONObject category;
+                    category = categoryArray.getJSONObject(j);
+                    machineCategory = category.getString("machineCategory");
+                    Log.d("partName = ", machineCategory);
+                    machineCategoryArray[j] = machineCategory;
+                    Log.d("machineCategoryArray", "machineCategory " +machineCategoryArray[j]);
+                }
+
+            }
+        }
+        return machineCategoryArray;
+    }
+
+    public String[] getMachineSubCategroy(JSONObject st) throws JSONException {
+        String machineSubCategory = null;
+        String[] machineSubCategoryArray = null;
+        JSONArray nameArray = st.names();
+        JSONArray valArray = st.toJSONArray(nameArray);
+        for (int i = 0; i < valArray.length(); i++) {
+            if (nameArray.getString(i).equals("result")) {
+                JSONObject json2 = new JSONObject(valArray.getString(i));
+                Log.d("show json2 = ", json2.toString());
+
+                JSONArray nameArray2 = json2.names();
+                JSONArray valArray2 = json2.toJSONArray(nameArray2);
+
+                Log.d("valArray2", valArray2.toString());
+
+                JSONArray subCategoryArray = valArray2.getJSONArray(1);
+                machineSubCategoryArray = new String[subCategoryArray.length()];
+                for (int j = 0; j < subCategoryArray.length(); ++j) {
+                    JSONObject subCategory;
+                    subCategory = subCategoryArray.getJSONObject(j);
+                    machineSubCategory = subCategory.getString("machineSubCategory");
+                    Log.d("partName = ", machineSubCategory);
+                    machineSubCategoryArray[j] = machineSubCategory;
+                    Log.d("partNameArray", "Parts " +machineSubCategoryArray[j]);
+                }
+
+            }
+        }
+        return machineSubCategoryArray;
     }
 }

@@ -15,6 +15,7 @@ public class SplashActivity extends Activity {
 
     // Splash screen timer
     private static int SPLASH_TIME_OUT = 500;
+    public static String DOMAIN= "http://3a9bc5a3.ngrok.io";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity implements ProcessFinishInt
 
     ProgressDialog progressDialog;
 
-    private static String url = "http://ae55f07b.ngrok.io/userMobile/authenticateMobileUser";
+    private static String url = SplashActivity.DOMAIN + "/userMobile/authenticateMobileUser";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

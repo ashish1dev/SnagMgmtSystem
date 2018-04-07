@@ -24,17 +24,16 @@ router.get('/list', utils.isLoggedIn, function(req, res) {
 
 router.post('/getSnagsBySnagType', function(req, res) {
     utilsSnag.listOfSnagBySnagType(req.body['currentStatusOfSnag']).then(function(response) {
-        console.log("response in getAllSnags = ", response);
+        console.log("response in getSnagsBySnagType = ", response);
 
         if(response.status == "success"){
             res.json({
-                'snag' : response.snags,
+                'snags' : response.snags,
                 'status' : "success"
             });
         }
         else if(response.status == "snagsNotFound"){
             res.json({
-                'snag' : response.snags,
                 'status' : "snagsNotFound"
             });
         }
@@ -162,15 +161,16 @@ router.post('/updateCurrentStatus', function(req, res) {
                                   req.body['userName'],
                                   req.body['userType'],
                                   req.body['currentStatusOfSnag']).then(function(response,err) {
+                                    console.log("response in updateCurrentStatus = ", response);
                                     if(response.status == "success") {
                                         res.json({
-                                            response : response,
+                                            'fetchCurrentStatus' : response.fetchCurrentStatus,
                                             status : 'success',
                                         });
                                     }
                                     else if(response.status == "noSnagFound") {
                                         res.json({
-                                            response : response,
+                                            'fetchCurrentStatus' : response.fetchCurrentStatus,
                                             status : 'noSnagFound'
                                         });
                                     }

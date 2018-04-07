@@ -24,7 +24,7 @@ public class SnagDetailsActivity extends AppCompatActivity implements ProcessFin
     EditText snagID, machineID, description, category, subCategory, partName;
     Button btnAccept;
 
-    private static String url = "http://ae55f07b.ngrok.io/snag/updateCurrentStatus";
+    private static String url = SplashActivity.DOMAIN + "/snag/updateCurrentStatus";
     String snag_id = null;
     String machine_id = null;
     String Description = null;
@@ -115,23 +115,64 @@ public class SnagDetailsActivity extends AppCompatActivity implements ProcessFin
     public void processFinish(JSONObject output) throws JSONException {
         Log.d("output ProcessFinish = ", output.toString());
         String status = getStatus(output);
+        String fetchCurrentStatus = getCurrentStatus(output);
         if (status != null && status.equals("success")) {
-            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-            // Setting Dialog Title
-            alertDialog.setTitle("Status");
+            if(fetchCurrentStatus != null && fetchCurrentStatus.equals("RESOLVED")) {
+                AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+                // Setting Dialog Title
+                alertDialog.setTitle("Status");
 
-            // Setting Dialog Message
-            alertDialog.setMessage("Snag Accepted");
+                // Setting Dialog Message
+                alertDialog.setMessage("Snag RESOLVED");
 
-            // Setting OK Button
-            alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    // Write your code here to execute after dialog closed
-                    Intent intent = new Intent(getApplication(), ListViewActivity.class);
-                    startActivity(intent);
-                }
-            });
-            alertDialog.show();
+                // Setting OK Button
+                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Write your code here to execute after dialog closed
+                        Intent intent = new Intent(getApplication(), ListViewActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                alertDialog.show();
+            }
+
+            else if(fetchCurrentStatus != null && fetchCurrentStatus.equals("REVIEWED")) {
+                AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+                // Setting Dialog Title
+                alertDialog.setTitle("Status");
+
+                // Setting Dialog Message
+                alertDialog.setMessage("Snag REVIEWED");
+
+                // Setting OK Button
+                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Write your code here to execute after dialog closed
+                        Intent intent = new Intent(getApplication(), ListViewActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                alertDialog.show();
+            }
+
+            else if(fetchCurrentStatus != null && fetchCurrentStatus.equals("CLOSED")) {
+                AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+                // Setting Dialog Title
+                alertDialog.setTitle("Status");
+
+                // Setting Dialog Message
+                alertDialog.setMessage("Snag CLOSED");
+
+                // Setting OK Button
+                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Write your code here to execute after dialog closed
+                        Intent intent = new Intent(getApplication(), ListViewActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                alertDialog.show();
+            }
 
         } else if (status != null && status.equals("noSnagFound")) {
             AlertDialog alertDialog = new AlertDialog.Builder(this).create();
@@ -163,5 +204,21 @@ public class SnagDetailsActivity extends AppCompatActivity implements ProcessFin
             }
         }
         return status;
+    }
+
+    public String getCurrentStatus(JSONObject st) throws JSONException {
+        Log.d("st in getCurrentStatus", st.toString());
+        String fetchCurrentStatus = null;
+        JSONArray nameArray = st.names();
+        Log.d("nameArray in func", nameArray.toString());
+        JSONArray valArray = st.toJSONArray(nameArray);
+        Log.d("valArray in func", valArray.toString());
+        for (int i = 0; i < valArray.length(); i++) {
+            if (nameArray.getString(i).equals("fetchCurrentStatus")) {
+                fetchCurrentStatus = valArray.getString(i);
+                Log.d("TAG currentStatus ", fetchCurrentStatus);
+            }
+        }
+        return fetchCurrentStatus;
     }
 }

@@ -192,19 +192,19 @@ var updateCurrentStatus = function(snagID, userName, userType, currentStatusOfSn
 	}
 	console.log("setString = ",setString);
 	Snag.findOneAndUpdate({'snagID' : snagID},
-							{"$set" : setString}, function(err, snag){
+							{"$set" : setString}, {new : true}, function(err, snag){
 		if (err) {
 	      deferred.reject(new Error(err));
 	    }
 	    if(snag){
 	    	deferred.resolve({
-	    		'snag' : snag,
+	    		'fetchCurrentStatus' : snag.currentStatusOfSnag,
 	    		'status' : 'success',
 	    	});
 	    }
 	    else{
 	    	deferred.resolve({
-	    		'snag' : null,
+	    		'fetchCurrentStatus' : null,
 	    		'status' : 'noSnagFound',
 	    	});
 	    }
