@@ -41,6 +41,10 @@
         <activity
             android:name=".SnagDetailsActivity"
             android:label="@string/title_activity_snag_details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MySnagsListViewActivity"
+            android:label="@string/title_activity_my_snags_list_view"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

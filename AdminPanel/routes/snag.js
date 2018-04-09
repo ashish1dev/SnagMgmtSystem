@@ -44,7 +44,8 @@ router.post('/getSnagsBySnagType', function(req, res) {
 router.post('/add', function(req, res) {
     // save snag in database
     console.log(req.body);
-    utilsSnag.addNewSnag(req.body['machineID'],
+    utilsSnag.addNewSnag(req.bpdy['snagID'],
+                         req.body['machineID'],
                          req.body['category'],
                          req.body['subCategory'],
                          req.body['partName'],
@@ -186,6 +187,25 @@ router.get('/listAllCategorySubCategoryParts', function(req, res) {
             'result' : response.result,
         });
     });
+});
+
+router.post('/getMySnags', function(req,res) {
+    utilsSnag.listMySnags(req.body['userType'],
+                      req.body['userName']).then(function(response, err){
+                        console.log("response in getMySnags = ", response);
+                                    if(response.status == "success") {
+                                        res.json({
+                                            'snags' : response.snags,
+                                            status : 'success',
+                                        });
+                                    }
+                                    else if(response.status == "noSnagFound") {
+                                        res.json({
+                                            'snags' : response.snags,
+                                            status : 'noSnagFound'
+                                        });
+                                    }
+                                  });
 });
 
 

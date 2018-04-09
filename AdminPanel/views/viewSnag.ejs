@@ -22,6 +22,7 @@
                         <thead>
                           <tr>
                               <th></th>
+                              <th>Snag Id</th>
                               <th>Machine Id</th>
                               <th>Category</th>
                               <th>Sub Category</th>
@@ -42,6 +43,9 @@
                                         <input type="button" data-id="<%=snag.id %>" data-toggle="modal" data-target="#deleteModal"  class="open-DeleteDialog btn btn-warning" value="Delete"/>
                                         &nbsp;&nbsp;&nbsp;
                                         <input type="button" class="updateButton btn btn-secondary" data-id="<%=snag.id %>" value="Update"> 
+                                    </td>
+                                    <td>
+                                        <%=snag.snagID %>
                                     </td>
                                     <td>
                                         <%=snag.machineID %>

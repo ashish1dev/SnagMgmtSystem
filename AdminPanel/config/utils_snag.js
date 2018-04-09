@@ -252,6 +252,40 @@ var getAllCategorySubCategoryParts = function(id) {
 	return deferred.promise;
 }
 
+var listMySnags = function(userType, userName) {
+	var deferred = Q.defer();
+	var getString = {};
+	if(userType == "INSPECTOR1"){
+		getString.inspector1UserName = userName;
+	}
+	if(userType == "FUNCTIONAL_OPERATOR"){
+		getString.functionalOperatorUserName = userName;
+	}
+	if(userType == "INSPECTOR2"){
+		getString.inspector2UserName = userName;
+	}
+	if(userType == "INSPECTOR3"){
+		getString.inspector3UserName = userName;
+	}
+	Snag.find(getString, function(err, snags) {
+		if (err) {
+	      deferred.reject(new Error(err));
+	    }
+	    if(snags){
+	    	deferred.resolve({
+	    		'snags' : snags,
+	    		'status' : 'success',
+	    	});
+	    }
+	    else{
+	    	deferred.resolve({
+	    		'snags' : null,
+	    		'status' : 'noSnagFound',
+	    	});
+	    }
+	});
+	return deferred.promise;
+}
 
 module.exports = {addNewSnag : addNewSnag,
 			  	  listAllSnag : listAllSnag,
@@ -261,4 +295,5 @@ module.exports = {addNewSnag : addNewSnag,
 			  	  listOfSnagBySnagType : listOfSnagBySnagType,
 			  	  updateCurrentStatus : updateCurrentStatus,
 			  	  getAllCategorySubCategoryParts : getAllCategorySubCategoryParts,
+			  	  listMySnags : listMySnags
 			  	  };

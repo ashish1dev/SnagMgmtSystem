@@ -34,4 +34,5 @@
     <string name="title_activity_add_snag">AddSnagActivity</string>
     <string name="title_activity_add">AddActivity</string>
     <string name="title_activity_snag_details">SnagDetails</string>
+    <string name="title_activity_my_snags_list_view">MySnagsListViewActivity</string>
 </resources>

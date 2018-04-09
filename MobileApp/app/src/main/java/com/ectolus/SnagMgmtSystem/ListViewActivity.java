@@ -148,7 +148,9 @@ public class ListViewActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_my_snags) {
-            // Handle the camera action
+            Intent intent = new Intent(getApplication(), MySnagsListViewActivity.class);
+            startActivity(intent);
+
         } else if (id == R.id.nav_Logout) {
             SharedPreferences preferences =getSharedPreferences("USER_PREFERENCES",Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
